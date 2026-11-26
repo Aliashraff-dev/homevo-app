@@ -1,0 +1,76 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main class="admin-main">
+  <div class="page-header">
+    <h1 class="page-title">Products</h1>
+    <button class="add-btn" routerLink="/admin/add-product">
+      <i class="fa-solid fa-plus"></i>
+      Add Product
+    </button>
+  </div>
+
+  <div *ngIf="sessionExpiredMessage" class="error-banner">{{ sessionExpiredMessage }}</div>
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (keyup.enter)="onSearch()"
+      placeholder="Search products...">
+    <button class="search-btn" (click)="onSearch()">Search</button>
+  </div>
+
+  <div class="panel">
+    <div *ngIf="loading" class="empty-state">Loading...</div>
+    <div *ngIf="!loading && products.length === 0" class="empty-state">No products found.</div>
+
+    <table *ngIf="!loading && products.length > 0" class="products-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Featured</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td><img [src]="product.imageUrl" [alt]="product.name" class="product-thumb"></td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.categoryName }}</td>
+          <td>${{ product.price }}</td>
+          <td>{{ product.stockQuantity }}</td>
+          <td>
+            <span class="badge" [class.featured]="product.isFeatured">
+              {{ product.isFeatured ? 'Yes' : 'No' }}
+            </span>
+          </td>
+          <td class="actions-cell">
+            <button class="icon-btn edit" [routerLink]="['/admin/edit-product', product.id]">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button class="icon-btn delete" (click)="confirmDelete(product.id)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<div class="confirm-overlay" *ngIf="deleteTargetId !== null">
+  <div class="confirm-box">
+    <h3>Delete Product?</h3>
+    <p>This action cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="cancel-btn" (click)="cancelDelete()">Cancel</button>
+      <button class="confirm-delete-btn" (click)="deleteProduct()">Delete</button>
+    </div>
+  </div>
+</div>

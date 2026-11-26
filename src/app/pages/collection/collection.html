@@ -1,0 +1,119 @@
+<app-header></app-header>
+
+<div class="collection-hero">
+  <h1>Our Collection</h1>
+  <p>Discover our full range of premium furniture pieces.</p>
+</div>
+
+<div class="search-bar-wrapper">
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Search for a product...">
+    <span *ngIf="searchQuery" (click)="searchQuery = ''" class="clear-search">✕</span>
+  </div>
+</div>
+
+<div class="filter-strip">
+  <span
+    *ngFor="let filter of filters"
+    [class.active-tab]="activeFilter === filter"
+    (click)="setFilter(filter)">
+    {{ filter }}
+  </span>
+</div>
+
+<div class="main-collection-wrapper">
+  
+  <aside class="filter-sidebar">
+    <h2 class="sidebar-main-title">SHOP BY FILTER</h2>
+
+    <div class="filter-section">
+      <h3 class="filter-section-title">Price</h3>
+      <div class="range-slider-wrapper">
+        <div class="slider-inputs">
+          <label>Min: ${{ minPrice }}</label>
+          <input type="range" min="100" max="1000" step="10" [(ngModel)]="minPrice">
+          
+          <label>Max: ${{ maxPrice }}</label>
+          <input type="range" min="100" max="1000" step="10" [(ngModel)]="maxPrice">
+        </div>
+        <div class="price-indicator-text">
+          ${{ minPrice }} <span>--------------------</span> ${{ maxPrice }}
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <h3 class="filter-section-title">Color</h3>
+      <div class="color-circles-grid">
+        <span class="color-circle pink" title="Pink"></span>
+        <span class="color-circle green" title="Green"></span>
+        <span class="color-circle brown" title="Brown"></span>
+        <span class="color-circle purple" title="Purple"></span>
+        <span class="color-circle orange" title="Orange"></span>
+        <span class="color-circle gray" title="Gray"></span>
+        <span class="color-circle mint" title="Mint"></span>
+        <span class="color-circle light-green" title="Light Green"></span>
+        <span class="color-circle lavender" title="Lavender"></span>
+        <span class="color-circle beige" title="Beige"></span>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <h3 class="filter-section-title">Material</h3>
+      <ul class="filter-list-items">
+        <li><span>Wood</span> <span class="count">(12)</span></li>
+        <li><span>Metal</span> <span class="count">(9)</span></li>
+        <li><span>Fabric</span> <span class="count">(6)</span></li>
+        <li><span>Leather</span> <span class="count">(10)</span></li>
+        <li><span>Velvet</span> <span class="count">(12)</span></li>
+      </ul>
+    </div>
+
+    <div class="filter-section">
+      <h3 class="filter-section-title">Size</h3>
+      <ul class="filter-list-items">
+        <li><span>Compact</span> <span class="count">(12)</span></li>
+        <li><span>Medium</span> <span class="count">(11)</span></li>
+        <li><span>Large</span> <span class="count">(12)</span></li>
+      </ul>
+    </div>
+  </aside>
+
+  <div class="product-grid-layout">
+    <div *ngIf="filteredProducts.length === 0" class="no-results">
+      <p>No products found for "{{ searchQuery }}" or selected price range.</p>
+    </div>
+    
+    <div *ngFor="let product of filteredProducts" class="product-card">
+      
+      <button class="favorite-btn" (click)="toggleFavorite(product)">
+        <i [class]="isFavorite(product.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+           [style.color]="isFavorite(product.id) ? '#8D4328' : ''"></i>
+      </button>
+
+      <img [src]="product.image" [alt]="product.name" onerror="this.src='assets/images/vero-detail-2.jpg'">
+      
+      <div class="product-info">
+        <div>
+          <h3>{{ product.name }}</h3>
+          <span class="price">${{ product.price }}</span>
+        </div>
+        <div class="card-actions">
+          <a [routerLink]="['/product']" 
+             [queryParams]="{ id: product.id, name: product.name, price: product.price, image: product.image }" 
+             class="details-btn">
+             Details
+          </a>
+          <button class="add-btn" (click)="addToCart(product)">+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-footer></app-footer>

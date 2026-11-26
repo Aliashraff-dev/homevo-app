@@ -1,0 +1,158 @@
+.admin-main {
+  margin-left: 260px;
+  padding: 40px;
+  background-color: #fcfbfa;
+  min-height: 100vh;
+}
+
+.header-section {
+  margin-bottom: 30px;
+}
+
+.header-section h1 {
+  font-size: 28px;
+  color: #2c211e;
+  margin-bottom: 5px;
+}
+
+.header-section p {
+  color: #7a6e6b;
+}
+
+.orders-list-card {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #efebe8;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th, .orders-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #efebe8;
+}
+
+.orders-table th {
+  background-color: #f8f6f5;
+  color: #594d4a;
+  font-weight: 600;
+}
+
+.order-num {
+  font-weight: bold;
+  color: #7b3f00;
+}
+
+.price {
+  font-weight: 600;
+  color: #2c211e;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge.pending {
+  background-color: #fff8e6;
+  color: #b7791f;
+}
+
+.status-badge.completed, .status-badge.delivered {
+  background-color: #e6fffa;
+  color: #234e52;
+}
+
+.status-badge.cancelled {
+  background-color: #ffe3e3;
+  color: #9b1c1c;
+}
+
+.state-msg {
+  color: #7a6e6b;
+  padding: 20px 0;
+}
+
+.customer-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.customer-name {
+  font-weight: 600;
+  color: #2c211e;
+}
+
+.customer-email {
+  font-size: 12px;
+  color: #7a6e6b;
+}
+.auth-error {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.status-toast {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #1e293b;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.status-select:focus {
+  outline: none;
+  border-color: #4f46e5;
+}
+
+.status-badge.processing {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.status-badge.shipped {
+  background-color: #ede9fe;
+  color: #6d28d9;
+}
+
+.status-badge.delivered {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.status-badge.cancelled {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}

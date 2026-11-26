@@ -1,0 +1,62 @@
+<header>
+  <div class="nav-links">
+    <a routerLink="/">Explore <span>↗</span></a>
+    <a routerLink="/collection">Collection</a>
+    <a routerLink="/about">About</a>
+    <a routerLink="/testimonial">Testimonial</a>
+  </div>
+  
+  <a routerLink="/" class="logo">HOMEVO</a>
+  
+  <div class="nav-icons">
+    <i class="fa-solid fa-magnifying-glass" (click)="toggleSearch()"></i>
+    
+    <a routerLink="/favorites" class="fav-icon-wrap">
+      <i class="fa-regular fa-heart"></i>
+      <span class="fav-count" *ngIf="favoritesService.favCount() > 0">
+        {{ favoritesService.favCount() }}
+      </span>
+    </a>
+    
+    <a routerLink="/cart" style="position: relative; display: flex; align-items: center; color: #4A2E1B; text-decoration: none;">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <span class="cart-count" *ngIf="cartService.cartCount() > 0" style="position: absolute; top: -8px; right: -8px; background: #8D4328; color: white; font-size: 0.65rem; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Jost', sans-serif; font-weight: bold;">
+        {{ cartService.cartCount() }}
+      </span>
+    </a>
+
+    <a *ngIf="!isLoggedIn()" routerLink="/login" style="display: flex; align-items: center; color: #4A2E1B; text-decoration: none; font-size: 1.15rem; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+      <i class="fa-regular fa-user"></i>
+    </a>
+
+    <!-- الجزء الخاص بالمستخدم المسجل مع نافذة التأكيد الجديدة -->
+    <div *ngIf="isLoggedIn()" style="position: relative; display: flex; align-items: center; gap: 10px; font-family: 'Jost', sans-serif; color: #4A2E1B; font-size: 0.95rem; font-weight: 500;">
+      <span>Hi, {{ getUserName() }}</span>
+      <i class="fa-solid fa-right-from-bracket" (click)="logout()" style="cursor: pointer; color: #8D4328; font-size: 1.05rem; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(2px)'" onmouseout="this.style.transform='translateX(0)'" title="Logout"></i>
+
+      <!-- نافذة تأكيد الخروج الصغيرة (Yes / No) -->
+      <div class="logout-popover" *ngIf="showLogoutConfirm">
+        <p class="logout-msg">Are you sure you want to log out?</p>
+        <div class="logout-actions">
+          <button class="pop-btn btn-yes" (click)="confirmLogout()">Yes</button>
+          <button class="pop-btn btn-no" (click)="cancelLogout()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="search-overlay" *ngIf="showSearch">
+  <div class="search-overlay-inner">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Search for products..."
+      (keyup.enter)="doSearch()"
+      autofocus>
+    <button (click)="doSearch()">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+    <span class="close-search" (click)="toggleSearch()">✕</span>
+  </div>
+</div>

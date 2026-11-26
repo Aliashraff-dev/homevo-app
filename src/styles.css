@@ -1,1 +1,162 @@
-/* You can add global styles to this file, and also import other style files */
+/* ==========================================
+   HOMEVO - Global Styles & CSS Variables
+   ========================================== */
+
+:root {
+  /* Colors */
+  --primary-color: #1a1a1a;
+  --secondary-color: #8c7355;
+  --accent-color: #d4af37;
+  --bg-light: #f9f8f6;
+  --bg-white: #ffffff;
+  --text-dark: #222222;
+  --text-muted: #666666;
+  --border-color: #e5e5e5;
+  --danger-color: #e74c3c;
+  --success-color: #2ecc71;
+
+  /* Typography */
+  --font-primary: 'Jost', sans-serif;
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-accent: 'Syne', sans-serif;
+
+  /* Transitions & Shadows */
+  --transition: all 0.3s ease;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+  overflow-x: clip;
+  font-family: var(--font-primary);
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: var(--font-primary);
+  transition: var(--transition);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Common Layout Helpers */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--bg-white);
+  padding: 12px 28px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  border: 1px solid var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: transparent;
+  color: var(--primary-color);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: var(--bg-white);
+  padding: 12px 28px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-color);
+}
+
+.custom-cart-toast {
+  position: fixed;
+  top: 30px;
+  right: -350px;
+  background: #ffffff;
+  color: #4A2E1B;
+  padding: 14px 20px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(74, 46, 27, 0.12);
+  border-left: 4px solid #8D4328;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 999999;
+  font-family: 'Jost', sans-serif;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  min-width: 280px;
+}
+
+.custom-cart-toast.toast-show {
+  right: 30px;
+}
+
+.toast-icon {
+  background: #fbfbfa;
+  color: #8D4328;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: 1px solid #f0eeeb;
+}
+
+.toast-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toast-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #4A2E1B;
+}
+
+.toast-msg {
+  font-size: 0.85rem;
+  color: #8a7e72;
+  font-weight: 400;
+}

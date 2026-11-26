@@ -1,0 +1,161 @@
+.favorites-container {
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 50px;
+}
+
+.favorites-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  text-transform: uppercase;
+  margin-bottom: 50px;
+}
+
+.empty-favorites {
+  text-align: center;
+  padding: 100px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.empty-favorites i {
+  font-size: 4rem;
+  color: #8D4328;
+  opacity: 0.4;
+}
+
+.empty-favorites p {
+  font-family: 'Jost', sans-serif;
+  font-size: 1.1rem;
+  color: #7A604D;
+}
+
+.browse-btn {
+  background: #8D4328;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.browse-btn:hover {
+  background: #4A2E1B;
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.fav-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+}
+
+.fav-card:hover {
+  transform: translateY(-5px);
+}
+
+.fav-img-wrap {
+  position: relative;
+}
+
+.fav-img-wrap img {
+  width: 100%;
+  height: 280px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  padding: 20px;
+}
+
+.remove-fav-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #8D4328;
+  transition: all 0.3s ease;
+}
+
+.remove-fav-btn:hover {
+  background: #8D4328;
+  color: white;
+}
+
+.fav-info {
+  padding: 15px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fav-info h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  color: #1A1A1A;
+  font-weight: 500;
+}
+
+.fav-price {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  color: #4A2E1B;
+  font-weight: 500;
+}
+
+.fav-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.details-btn {
+  color: #4A2E1B;
+  text-decoration: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  border: 1px solid #4A2E1B;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.details-btn:hover {
+  background: #4A2E1B;
+  color: white;
+}
+
+.add-cart-btn {
+  background: #8D4328;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-cart-btn:hover {
+  background: #4A2E1B;
+}

@@ -1,0 +1,303 @@
+header {
+  background: #FAF6F0;
+  padding: 25px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.nav-links {
+  display: flex;
+  gap: 35px;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #4A2E1B;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1.05rem;
+}
+
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #8D4328 !important;
+  letter-spacing: -3.5px;
+  text-transform: uppercase;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-icons {
+  display: flex;
+  gap: 25px;
+  font-size: 1.1rem;
+  align-items: center;
+}
+
+.nav-icons i,
+.nav-icons a {
+  color: #4A2E1B;
+  text-decoration: none;
+}
+
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(250, 246, 240, 0.97);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-overlay-inner {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 700px;
+  padding: 0 30px;
+  border-bottom: 2px solid #8D4328;
+  padding-bottom: 15px;
+}
+
+.search-overlay-inner input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  color: #4A2E1B;
+}
+
+.search-overlay-inner input::placeholder {
+  color: rgba(74, 46, 27, 0.4);
+}
+
+.search-overlay-inner button {
+  background: transparent;
+  border: none;
+  color: #8D4328;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.close-search {
+  cursor: pointer;
+  color: #4A2E1B;
+  font-size: 1.5rem;
+  padding: 5px;
+  transition: color 0.3s ease;
+}
+
+.close-search:hover {
+  color: #8D4328;
+}
+
+.nav-icons i {
+  cursor: pointer;
+}
+.fav-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #4A2E1B;
+  text-decoration: none;
+}
+
+.fav-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #8D4328;
+  color: white;
+  font-size: 0.65rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Jost', sans-serif;
+}
+
+/* حاوية الزرار والقائمة */
+.user-menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* زر الـ Logout */
+.logout-trigger-btn {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2D231E;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.logout-trigger-btn:hover {
+  background-color: rgba(141, 67, 40, 0.08);
+}
+
+/* نافذة التأكيد الصغيرة تحت الزرار */
+.logout-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 210px;
+  background-color: #FFFFFF;
+  border: 1px solid #EAE5DF;
+  border-radius: 10px;
+  padding: 14px 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  text-align: center;
+  animation: popIn 0.2s ease-out;
+}
+
+/* سهم صغير أعلى النافذة مشير للزرار */
+.logout-popover::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 15px;
+  width: 10px;
+  height: 10px;
+  background-color: #FFFFFF;
+  border-left: 1px solid #EAE5DF;
+  border-top: 1px solid #EAE5DF;
+  transform: rotate(45deg);
+}
+
+.logout-msg {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2D231E;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.logout-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* أزرار Yes و No */
+.pop-btn {
+  flex: 1;
+  padding: 6px 0;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-yes {
+  background-color: #8D4328; /* لون البراند الخشبي */
+  color: #FFFFFF;
+  border: none;
+}
+
+.btn-yes:hover {
+  background-color: #70331D;
+}
+
+.btn-no {
+  background-color: #F5F2ED;
+  color: #666666;
+  border: 1px solid #E0DDD7;
+}
+
+.btn-no:hover {
+  background-color: #E8E3DC;
+  color: #2D231E;
+}
+
+/* حركة ظهور ناعمة */
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 992px) {
+  header {
+    padding: 18px 24px;
+  }
+  .nav-links {
+    gap: 18px;
+  }
+  .nav-links a {
+    font-size: 0.95rem;
+  }
+  .logo {
+    font-size: 2rem;
+    letter-spacing: -2.5px;
+  }
+  .nav-icons {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  header {
+    padding: 14px 16px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+  .logo {
+    position: static;
+    transform: none;
+    order: 1;
+    font-size: 1.65rem;
+    letter-spacing: -1.5px;
+  }
+  .nav-icons {
+    order: 2;
+    gap: 14px;
+    font-size: 1rem;
+  }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px 18px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(74, 46, 27, 0.1);
+  }
+  .nav-links a {
+    font-size: 0.88rem;
+  }
+  .search-overlay-inner input {
+    font-size: 1.35rem;
+  }
+}

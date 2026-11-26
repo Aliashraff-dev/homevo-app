@@ -1,0 +1,110 @@
+<app-header></app-header>
+
+<div class="confirmation-container" *ngIf="order; else emptyConfirmation">
+  
+  <div class="progress-indicator-wrap">
+    <div class="progress-indicator">
+      <div class="step completed"><span>1</span> Cart</div>
+      <div class="line done"></div>
+      <div class="step completed"><span>2</span> Checkout</div>
+      <div class="line done"></div>
+      <div class="step active"><span>3</span> Confirmation</div>
+    </div>
+  </div>
+
+  <div class="success-banner">
+    <div class="checkmark-wrapper">
+      <div class="checkmark-circle">
+        <i class="fa-solid fa-check"></i>
+      </div>
+    </div>
+    <h1 class="success-title">ORDER CONFIRMED!</h1>
+    <p class="success-subtitle">
+      Thank you for choosing HOMEVO. Your luxury interior experience has officially begun!<br>
+      We are preparing your premium furniture pieces and will notify you as soon as they ship.
+    </p>
+    <div class="order-id-badge">Order ID: {{ order.orderId }}</div>
+  </div>
+
+  <div class="order-summary-box">
+    <h2 class="summary-box-title">Order Details Summary</h2>
+    
+    <div class="summary-details-grid">
+      
+      <div class="customer-info-col">
+        <h3>Shipping & Customer Details</h3>
+        <div class="info-group">
+          <span class="info-label">Full Name:</span>
+          <span class="info-value">{{ order.shippingInfo?.firstName }} {{ order.shippingInfo?.lastName }}</span>
+        </div>
+        <div class="info-group">
+          <span class="info-label">Email Address:</span>
+          <span class="info-value">{{ order.shippingInfo?.email }}</span>
+        </div>
+        <div class="info-group">
+          <span class="info-label">Phone Number:</span>
+          <span class="info-value">{{ order.shippingInfo?.phone }}</span>
+        </div>
+        <div class="info-group">
+          <span class="info-label">Delivery Address:</span>
+          <span class="info-value">{{ order.shippingInfo?.address }}, {{ order.shippingInfo?.city }}, {{ order.shippingInfo?.state }}, {{ order.shippingInfo?.country }}</span>
+        </div>
+        <div class="info-group">
+          <span class="info-label">Postal Code:</span>
+          <span class="info-value">{{ order.shippingInfo?.zipCode }}</span>
+        </div>
+      </div>
+
+      <div class="products-info-col">
+        <h3>Items Ordered</h3>
+        <div class="conf-products-list">
+          <div class="conf-product-item" *ngFor="let item of order.products">
+            <img [src]="item.image || item.img || '/hero-chair.png'" [alt]="item.name || item.title" onerror="this.src='/hero-chair.png'">
+            <div class="conf-product-meta">
+              <h4>{{ item.name || item.title }}</h4>
+              <p>Qty: {{ item.quantity }} | Color: Premium Brown</p>
+            </div>
+            <div class="conf-product-price">${{ (item.price || 0) * (item.quantity || 1) }}</div>
+          </div>
+        </div>
+
+        <div class="conf-price-breakdown">
+          <div class="conf-price-row">
+            <span>Subtotal:</span>
+            <span>${{ order.subtotal }}</span>
+          </div>
+          <div class="conf-price-row">
+            <span>Shipping & Handling:</span>
+            <span>${{ order.shipping }}</span>
+          </div>
+          <div class="conf-price-row">
+            <span>Estimated Tax:</span>
+            <span>${{ order.tax }}</span>
+          </div>
+          <div class="conf-price-row total-row">
+            <span>Grand Total:</span>
+            <span>${{ order.total }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="action-center">
+    <a routerLink="/" class="continue-shopping-btn">Continue Shopping</a>
+  </div>
+
+</div>
+
+<ng-template #emptyConfirmation>
+  <div class="confirmation-container" style="text-align: center; padding: 60px 20px;">
+    <h2>No Recent Order Found</h2>
+    <p>There is no recent order confirmation available to display.</p>
+    <div class="action-center" style="margin-top: 20px;">
+      <a routerLink="/collection" class="continue-shopping-btn">Browse Collection</a>
+    </div>
+  </div>
+</ng-template>
+
+<app-footer></app-footer>

@@ -1,0 +1,230 @@
+.admin-main {
+  margin-left: 260px;
+  padding: 40px 45px;
+  background: #FAF6F0;
+  min-height: 100vh;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.1rem;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.add-btn {
+  background: #8D4328;
+  color: white;
+  border: none;
+  padding: 12px 26px;
+  border-radius: 8px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-btn:hover {
+  background: #6e3320;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border-radius: 10px;
+  padding: 12px 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 20px rgba(74, 46, 27, 0.06);
+}
+
+.search-bar i {
+  color: #8D4328;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  color: #4A2E1B;
+}
+
+.search-btn {
+  background: #8D4328;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.panel {
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(74, 46, 27, 0.06);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 0;
+  color: #7A604D;
+  font-family: 'Jost', sans-serif;
+}
+
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.products-table th {
+  text-align: left;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #7A604D;
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(74, 46, 27, 0.08);
+}
+
+.products-table td {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  color: #1A1A1A;
+  padding: 14px 10px;
+  border-bottom: 1px solid rgba(74, 46, 27, 0.05);
+  vertical-align: middle;
+}
+
+.product-thumb {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  background: #F0EAE2;
+  color: #7A604D;
+}
+
+.badge.featured {
+  background: #E8DCCB;
+  color: #6e3320;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.icon-btn.edit {
+  background: #F0EAE2;
+  color: #6e3320;
+}
+
+.icon-btn.edit:hover {
+  background: #8D4328;
+  color: white;
+}
+
+.icon-btn.delete {
+  background: #F5E4E4;
+  color: #a93226;
+}
+
+.icon-btn.delete:hover {
+  background: #a93226;
+  color: white;
+}
+
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(34, 17, 7, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.confirm-box {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  max-width: 360px;
+  text-align: center;
+}
+
+.confirm-box h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: #1A1A1A;
+  margin-bottom: 10px;
+}
+
+.confirm-box p {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  color: #7A604D;
+  margin-bottom: 22px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.cancel-btn, .confirm-delete-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #F0EAE2;
+  color: #4A2E1B;
+}
+
+.confirm-delete-btn {
+  background: #a93226;
+  color: white;
+}

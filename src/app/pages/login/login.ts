@@ -1,0 +1,162 @@
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { HeaderComponent } from '../../components/header/header';
+import { FooterComponent } from '../../components/footer/footer';
+import { environment } from '../../../environments/environment';
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent],
+  templateUrl: './login.html',
+  styleUrls: ['./login.css']
+})
+export class LoginComponent {
+  isLoginMode = true;
+  apiUrl = environment.apiBaseUrl;
+  errorMessage = '';
+
+  authData = {
+    name: '',
+    email: '',
+    password: ''
+  };
+
+  errors = {
+    name: '',
+    email: '',
+    password: ''
+  };
+
+  constructor(
+    private router: Router, 
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  toggleMode() {
+    this.isLoginMode = !this.isLoginMode;
+    this.clearErrors();
+    this.authData = { name: '', email: '', password: '' };
+  }
+
+  clearErrors() {
+    this.errorMessage = '';
+    this.errors = { name: '', email: '', password: '' };
+  }
+
+  validateSignUp(): boolean {
+    this.clearErrors();
+    let isValid = true;
+
+    if (!this.authData.name || this.authData.name.trim().length < 3) {
+      this.errors.name = 'Name must be at least 3 characters long.';
+      isValid = false;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!this.authData.email || !emailPattern.test(this.authData.email)) {
+      this.errors.email = 'Please enter a valid email address.';
+      isValid = false;
+    }
+
+    if (!this.authData.password) {
+      this.errors.password = 'Password is required.';
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  private decodeToken(token: string): any {
+    try {
+      const payload = token.split('.')[1];
+      return JSON.parse(atob(payload));
+    } catch {
+      return null;
+    }
+  }
+
+  private handleAuthSuccess(response: any) {
+    if (response && response.token) {
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('refreshToken', response.refreshToken || '');
+      localStorage.setItem('userName', response.fullName || this.authData.name);
+
+      const decoded = this.decodeToken(response.token);
+      const role = decoded ? decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
+
+      if (role === 'Admin') {
+        this.router.navigate(['/admin/dashboard']);
+      } else {
+        this.router.navigate(['/']);
+      }
+    }
+  }
+
+  onSubmit() {
+    this.clearErrors();
+
+    if (this.isLoginMode) {
+      if (!this.authData.email.trim() || !this.authData.password.trim()) {
+        this.errorMessage = 'Please enter both email and password.';
+        this.cdr.detectChanges();
+        return;
+      }
+
+      this.http.post<any>(`${this.apiUrl}/Auth/login`, {
+        email: this.authData.email,
+        password: this.authData.password
+      }).subscribe({
+        next: (response) => {
+          this.handleAuthSuccess(response);
+        },
+        error: (err) => {
+          console.error('Login error details:', err);
+          this.errorMessage = err.error || 'Invalid email or password.';
+          this.cdr.detectChanges(); // تحديث فوري للشاشة عند الخطأ
+        }
+      });
+
+    } else {
+      if (this.validateSignUp()) {
+        const registeredEmail = this.authData.email;
+
+        this.http.post<any>(`${this.apiUrl}/Auth/register`, {
+          fullName: this.authData.name,
+          email: this.authData.email,
+          password: this.authData.password
+        }).subscribe({
+          next: (response) => {
+            this.isLoginMode = true;
+            this.clearErrors();
+            this.authData = {
+              name: '',
+              email: registeredEmail,
+              password: ''
+            };
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.error('Register error details:', err);
+            if (err.error) {
+              if (typeof err.error === 'string') {
+                this.errorMessage = err.error;
+              } else if (Array.isArray(err.error)) {
+                this.errorMessage = err.error.join(' | ');
+              } else {
+                this.errorMessage = JSON.stringify(err.error);
+              }
+            } else {
+              this.errorMessage = 'Bad Request (400): Check password complexity or email format.';
+            }
+            this.cdr.detectChanges(); // تحديث فوري للشاشة عند الخطأ
+          }
+        });
+      }
+    }
+  }
+}

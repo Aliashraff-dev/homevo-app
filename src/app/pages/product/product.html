@@ -1,0 +1,27 @@
+<app-header></app-header>
+
+<div class="product-details-container" style="max-width: 1200px; margin: 50px auto; padding: 20px; display: flex; gap: 50px;">
+  
+  <div class="product-image-section" style="flex: 1; text-align: center;">
+    <img [src]="product.image" [alt]="product.name" style="max-width: 100%; height: 450px; object-fit: contain; border-radius: 12px; background: #fbfbfa;">
+  </div>
+
+  <div class="product-info-section" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+    <h1 style="font-size: 2.5rem; color: #4A2E1B; margin-bottom: 10px;">{{ product.name }}</h1>
+    
+    <p class="product-price" style="font-size: 1.8rem; font-weight: 600; color: #8D4328; margin-bottom: 20px;">
+      ${{ product.price }}.00
+    </p>
+
+    <div class="product-description" style="color: #665c54; line-height: 1.6; margin-bottom: 30px;">
+      <p>Experience luxurious comfort with the <strong>{{ product.name }}</strong>. Crafted with premium materials, this piece embodies the ultimate luxury minimalist style of HOMEVO, designed to seamlessly elevate your contemporary living space.</p>
+    </div>
+
+    <button (click)="addToCart()" style="background: #4A2E1B; color: white; border: none; padding: 15px 35px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background 0.2s;">
+      Add to Cart
+    </button>
+  </div>
+
+</div>
+
+<app-footer></app-footer>

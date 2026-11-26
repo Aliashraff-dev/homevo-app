@@ -1,0 +1,54 @@
+<app-header></app-header>
+
+<div class="auth-container">
+  <div class="auth-box">
+    <h2>{{ isLoginMode ? 'Welcome Back' : 'Create Account' }}</h2>
+    <p class="auth-subtitle">
+      {{ isLoginMode ? 'Review your curated spaces and manage your orders.' : 'Join HOMEVO to experience premium living and exclusive designs.' }}
+    </p>
+
+    <!-- شريط رسالة الخطأ العامة باللون الأحمر -->
+    <div class="error-banner" *ngIf="errorMessage">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <form (submit)="$event.preventDefault(); onSubmit()" novalidate>
+      
+      <!-- حقل الاسم الكامل -->
+      <div class="form-group" *ngIf="!isLoginMode">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" [(ngModel)]="authData.name" placeholder="Ali Ashraf" required>
+        <!-- رسالة الخطأ باللون الأحمر -->
+        <p class="error-msg" *ngIf="errors.name">{{ errors.name }}</p>
+      </div>
+
+      <!-- حقل البريد الإلكتروني -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" [(ngModel)]="authData.email" placeholder="name@example.com" required>
+        <!-- رسالة الخطأ باللون الأحمر -->
+        <p class="error-msg" *ngIf="errors.email">{{ errors.email }}</p>
+      </div>
+
+      <!-- حقل كلمة المرور -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" [(ngModel)]="authData.password" placeholder="••••••••" required>
+        <!-- رسالة الخطأ باللون الأحمر -->
+        <p class="error-msg" *ngIf="errors.password">{{ errors.password }}</p>
+      </div>
+
+      <button type="submit" class="auth-btn">
+        {{ isLoginMode ? 'Sign In' : 'Register' }}
+      </button>
+    </form>
+
+    <div class="auth-toggle">
+      <span>{{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}</span>
+      <button type="button" (click)="toggleMode()">{{ isLoginMode ? 'Create One' : 'Sign In' }}</button>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

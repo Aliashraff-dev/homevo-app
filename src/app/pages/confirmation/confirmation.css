@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap');
+
+.confirmation-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Jost', sans-serif;
+  color: #4A2E1B;
+}
+
+/* بار الخطوات العلوي */
+.progress-indicator-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.progress-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #b0a8a2;
+}
+
+.progress-indicator .step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.progress-indicator .step span {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #b0a8a2;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.progress-indicator .step.completed {
+  color: #4A2E1B;
+  font-weight: 500;
+}
+.progress-indicator .step.completed span {
+  background-color: #4A2E1B;
+  color: #fff;
+  border-color: #4A2E1B;
+}
+
+.progress-indicator .step.active {
+  color: #8D4328;
+  font-weight: 600;
+}
+.progress-indicator .step.active span {
+  background-color: #8D4328;
+  color: #fff;
+  border-color: #8D4328;
+}
+
+.progress-indicator .line {
+  width: 60px;
+  height: 1px;
+  background-color: #e0dcd8;
+}
+.progress-indicator .line.done {
+  background-color: #4A2E1B;
+}
+
+/* تصميم الجزء العلوي وعلامة الصح الدائرية */
+.success-banner {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.checkmark-wrapper {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.checkmark-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(141, 67, 40, 0.1); /* ثيم اللون الترابي مخفف */
+  color: #8D4328;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.2rem;
+  margin: 0 auto;
+  animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.success-title {
+  font-size: 2.4rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  color: #4A2E1B;
+}
+
+.success-subtitle {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #665c54;
+  max-width: 700px;
+  margin: 0 auto 25px auto;
+}
+
+.order-id-badge {
+  display: inline-block;
+  background-color: #4A2E1B;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* صندوق تفاصيل الطلب بالكامل */
+.order-summary-box {
+  background: #ffffff;
+  border: 1px solid #eae6e1;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 4px 24px rgba(74, 46, 27, 0.02);
+  margin-bottom: 40px;
+}
+
+.summary-box-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eae6e1;
+}
+
+.summary-details-grid {
+  display: grid;
+  grid-template-columns: 45% 50%;
+  gap: 5%;
+}
+
+.summary-details-grid h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #8D4328;
+}
+
+/* تنسيق البيانات الشخصية */
+.customer-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-right: 1px solid #f0eae4;
+  padding-right: 5%;
+}
+
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-label {
+  font-size: 0.85rem;
+  color: #888;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4A2E1B;
+}
+
+/* تنسيق المنتجات والفاتورة */
+.conf-products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.conf-product-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.conf-product-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  background-color: #f5f1ec;
+}
+
+.conf-product-meta {
+  flex: 1;
+}
+
+.conf-product-meta h4 {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+
+.conf-product-meta p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.conf-product-price {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* تفاصيل الأسعار أسفل المنتجات */
+.conf-price-breakdown {
+  background-color: #faf9f6;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.conf-price-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.conf-price-row.total-row {
+  border-top: 1px solid #e0dcd8;
+  padding-top: 10px;
+  margin-top: 5px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #4A2E1B;
+}
+
+/* زر التوجيه النهائي للرئيسية */
+.action-center {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.continue-shopping-btn {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #8D4328;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.continue-shopping-btn:hover {
+  background-color: #4A2E1B;
+  box-shadow: 0 4px 15px rgba(74, 46, 27, 0.15);
+}
+
+/* انيميشن زهور الصح المبهجة */
+@keyframes scaleUp {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* التوافق مع الشاشات الصغيرة */
+@media (max-width: 768px) {
+  .summary-details-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .customer-info-col {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 1px solid #f0eae4;
+    padding-bottom: 30px;
+  }
+}

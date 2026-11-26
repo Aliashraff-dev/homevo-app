@@ -1,0 +1,64 @@
+.admin-main {
+  margin-left: 240px;
+  padding: 32px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.back-btn {
+  text-decoration: none;
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  color: inherit;
+}
+
+.product-form {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.submit-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.error-text,
+.error-banner {
+  color: #b91c1c;
+}
+
+.success-banner {
+  color: #15803d;
+}

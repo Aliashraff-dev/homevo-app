@@ -1,0 +1,68 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main class="admin-main">
+  <div class="header-section">
+    <h1>Orders Management</h1>
+    <p>View and manage all customer orders</p>
+  </div>
+
+  <div *ngIf="sessionExpiredMessage" class="state-msg auth-error">
+    {{ sessionExpiredMessage }}
+  </div>
+
+  <div *ngIf="statusUpdatedMessage" class="status-toast">
+    {{ statusUpdatedMessage }}
+  </div>
+
+  <div class="orders-list-card">
+    <div *ngIf="loading" class="state-msg">Loading orders...</div>
+    <div *ngIf="!loading && orders.length === 0" class="state-msg">No orders found.</div>
+
+    <table *ngIf="!loading && orders.length > 0" class="orders-table">
+      <thead>
+        <tr>
+          <th>Order #</th>
+          <th>Customer</th>
+          <th>Date</th>
+          <th>Items Count</th>
+          <th>Total Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td class="order-num">{{ order.orderNumber }}</td>
+          <td>
+            <div class="customer-container" style="display: flex; align-items: center; gap: 12px;">
+              <div class="customer-avatar" style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #9333ea); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 15px; flex-shrink: 0;">
+                {{ (order.customerName ? order.customerName.charAt(0) : 'C') | uppercase }}
+              </div>
+              <div class="customer-info" style="display: flex; flex-direction: column;">
+                <span class="customer-name" style="font-weight: 600; color: #1e293b;">{{ order.customerName }}</span>
+                <span class="customer-email" style="font-size: 12px; color: #64748b;" *ngIf="order.customerEmail">{{ order.customerEmail }}</span>
+              </div>
+            </div>
+          </td>
+          <td>{{ order.createdAt | date: 'medium' }}</td>
+          <td>{{ order.itemsCount }} items</td>
+          <td class="price">${{ order.totalAmount }}</td>
+          <td>
+            <div class="status-control">
+              <span class="status-badge" [class]="(order.status || 'pending').toLowerCase()">
+                {{ order.status }}
+              </span>
+              <select
+                class="status-select"
+                [ngModel]="order.status"
+                (ngModelChange)="onStatusChange(order, $event)"
+                [attr.aria-label]="'Change status for order ' + order.orderNumber"
+              >
+                <option *ngFor="let opt of statusOptions" [value]="opt">{{ opt }}</option>
+              </select>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>

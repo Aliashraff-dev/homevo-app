@@ -1,0 +1,50 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main class="admin-main">
+  <div class="header-section">
+    <h1>Category Management</h1>
+    <p>Add and manage product categories</p>
+  </div>
+
+  <div *ngIf="sessionExpiredMessage" class="error-banner">{{ sessionExpiredMessage }}</div>
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+
+  <div class="add-category-card">
+    <h3>Add New Category</h3>
+    <form (ngSubmit)="addCategory()" class="category-form">
+      <input 
+        type="text" 
+        [(ngModel)]="newCategoryName" 
+        name="categoryName" 
+        placeholder="Enter category name..." 
+        required 
+      />
+      <button type="submit" [disabled]="!newCategoryName.trim()">Add Category</button>
+    </form>
+  </div>
+
+  <div class="categories-list-card">
+    <h3>Existing Categories</h3>
+    <div *ngIf="loading" class="state-msg">Loading categories...</div>
+    <div *ngIf="!loading && categories.length === 0" class="state-msg">No categories found.</div>
+
+    <table *ngIf="!loading && categories.length > 0" class="categories-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Category Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cat of categories">
+          <td>#{{ cat.id }}</td>
+          <td>{{ cat.name }}</td>
+          <td>
+            <button class="delete-btn" (click)="deleteCategory(cat.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>

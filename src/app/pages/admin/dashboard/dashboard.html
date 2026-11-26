@@ -1,0 +1,100 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main class="admin-main">
+  <div class="welcome-section">
+    <div>
+      <h1 class="welcome-title">Welcome back, {{ adminName }}</h1>
+      <p class="welcome-date">{{ currentDate | date: 'EEEE, MMMM d, y' }}</p>
+    </div>
+    <button class="add-product-btn" routerLink="/admin/add-product">
+      <i class="fa-solid fa-plus"></i>
+      Add Product
+    </button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon revenue"><i class="fa-solid fa-sack-dollar"></i></div>
+      <div class="stat-info">
+        <span class="stat-label">Total Revenue</span>
+        <span class="stat-value">${{ summary.totalRevenue }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon orders"><i class="fa-solid fa-bag-shopping"></i></div>
+      <div class="stat-info">
+        <span class="stat-label">Total Orders</span>
+        <span class="stat-value">{{ summary.totalOrders }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon products"><i class="fa-solid fa-couch"></i></div>
+      <div class="stat-info">
+        <span class="stat-label">Total Products</span>
+        <span class="stat-value">{{ summary.totalProducts }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon customers"><i class="fa-solid fa-users"></i></div>
+      <div class="stat-info">
+        <span class="stat-label">Total Customers</span>
+        <span class="stat-value">{{ summary.totalCustomers }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-actions">
+    <button class="action-btn" routerLink="/admin/add-product">
+      <i class="fa-solid fa-plus"></i> Add Product
+    </button>
+    <button class="action-btn" routerLink="/admin/orders">
+      <i class="fa-solid fa-eye"></i> View Orders
+    </button>
+    <button class="action-btn" routerLink="/admin/products">
+      <i class="fa-solid fa-gear"></i> Manage Products
+    </button>
+    <button class="action-btn" routerLink="/admin/categories">
+      <i class="fa-solid fa-list"></i> Manage Categories
+    </button>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="panel orders-panel">
+      <h3 class="panel-title">Recent Orders</h3>
+      <div *ngIf="loading" class="empty-state">Loading...</div>
+      <div *ngIf="!loading && recentOrders.length === 0" class="empty-state">No orders yet.</div>
+      <table *ngIf="!loading && recentOrders.length > 0" class="orders-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of recentOrders">
+            <td>{{ order.orderNumber }}</td>
+            <td>{{ order.createdAt | date: 'short' }}</td>
+            <td>{{ order.items.length }}</td>
+            <td>${{ order.totalPrice }}</td>
+            <td><span class="status-badge" [class]="order.status.toLowerCase()">{{ order.status }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel stock-panel">
+      <h3 class="panel-title">Low Stock Products</h3>
+      <div *ngIf="lowStockProducts.length === 0" class="empty-state">All stocked up.</div>
+      <div *ngFor="let product of lowStockProducts" class="low-stock-item">
+        <span class="product-name">{{ product.name }}</span>
+        <span class="stock-count">{{ product.stockQuantity }} left</span>
+      </div>
+    </div>
+  </div>
+</main>

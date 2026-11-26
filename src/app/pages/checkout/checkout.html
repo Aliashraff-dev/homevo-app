@@ -1,0 +1,169 @@
+<app-header></app-header>
+
+<div class="checkout-page-wrapper">
+  <h1 class="page-title">CHECKOUT</h1>
+
+  <div class="checkout-sub-header">
+    <a routerLink="/cart" class="back-btn">← Continue Shopping</a>
+    
+    <div class="progress-indicator">
+      <div class="step completed"><span>1</span> Cart</div>
+      <div class="line done"></div>
+      <div class="step active"><span>2</span> Checkout</div>
+      <div class="line"></div>
+      <div class="step"><span>3</span> Confirmation</div>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-banner" style="color: #b71c1c; background: #fdecea; padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-weight: 500;">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="discountMessage" class="success-banner" style="color: #1b5e20; background: #edf7ed; padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-weight: 500;">
+    {{ discountMessage }}
+  </div>
+
+  <div class="checkout-main-grid">
+    
+    <div class="left-column">
+      <form (ngSubmit)="onPlaceOrder()">
+        
+        <div class="section-block">
+          <h2 class="section-heading">Shipping Information</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" name="firstName" [(ngModel)]="shippingInfo.firstName" placeholder="John" required>
+              <span style="color: #d32f2f; font-size: 0.85rem; margin-top: 4px; display: block; font-weight: 500;" *ngIf="isSubmitted && !shippingInfo.firstName">First name is required.</span>
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" name="lastName" [(ngModel)]="shippingInfo.lastName" placeholder="Doe" required>
+              <span style="color: #d32f2f; font-size: 0.85rem; margin-top: 4px; display: block; font-weight: 500;" *ngIf="isSubmitted && !shippingInfo.lastName">Last name is required.</span>
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Email Address</label>
+            <input type="email" name="email" [(ngModel)]="shippingInfo.email" placeholder="john.doe@example.com" required>
+            <span style="color: #d32f2f; font-size: 0.85rem; margin-top: 4px; display: block; font-weight: 500;" *ngIf="isSubmitted && !shippingInfo.email">Email address is required.</span>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Phone Number</label>
+            <input type="text" name="phone" [(ngModel)]="shippingInfo.phone" placeholder="+1 (555) 123-4567" required>
+            <span style="color: #d32f2f; font-size: 0.85rem; margin-top: 4px; display: block; font-weight: 500;" *ngIf="isSubmitted && !shippingInfo.phone">Phone number is required.</span>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Street Address</label>
+            <input type="text" name="address" [(ngModel)]="shippingInfo.address" placeholder="123 Main Street" required>
+            <span style="color: #d32f2f; font-size: 0.85rem; margin-top: 4px; display: block; font-weight: 500;" *ngIf="isSubmitted && !shippingInfo.address">Street address is required.</span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" name="city" [(ngModel)]="shippingInfo.city" placeholder="New York" required>
+              <span style="color: #d32f2f; font-size: 0.85rem; margin-top: 4px; display: block; font-weight: 500;" *ngIf="isSubmitted && !shippingInfo.city">City is required.</span>
+            </div>
+            <div class="form-group">
+              <label>State / Province</label>
+              <input type="text" name="state" [(ngModel)]="shippingInfo.state" placeholder="NY" required>
+              <span style="color: #d32f2f; font-size: 0.85rem; margin-top: 4px; display: block; font-weight: 500;" *ngIf="isSubmitted && !shippingInfo.state">State / Province is required.</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>ZIP / Postal Code</label>
+              <input type="text" name="zipCode" [(ngModel)]="shippingInfo.zipCode" placeholder="10001">
+            </div>
+            <div class="form-group">
+              <label>Country</label>
+              <input type="text" name="country" [(ngModel)]="shippingInfo.country" placeholder="USA" required>
+              <span style="color: #d32f2f; font-size: 0.85rem; margin-top: 4px; display: block; font-weight: 500;" *ngIf="isSubmitted && !shippingInfo.country">Country is required.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-block">
+          <h2 class="section-heading">Payment Information</h2>
+          <div class="payment-options">
+            <label class="radio-label">
+              <input type="radio" name="payment" value="bank" [(ngModel)]="paymentMethod">
+              Bank
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="payment" value="cod" [(ngModel)]="paymentMethod">
+              Cash on Delivery
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="payment" value="paypal" [(ngModel)]="paymentMethod">
+              Paypal
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="place-order-btn" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'PROCESSING...' : 'PLACE ORDER' }}
+        </button>
+      </form>
+    </div>
+
+    <div class="right-column">
+      <div class="summary-card">
+        <h2 class="summary-title">Order Summary</h2>
+        
+        <div class="summary-products-list">
+          <div class="product-item" *ngFor="let item of cart">
+            <div class="product-img-placeholder">
+              <img [src]="item.image || item.img || '/hero-chair.png'" 
+                   [alt]="item.name || item.title" 
+                   onerror="this.src='/hero-chair.png'">
+            </div>
+            <div class="product-details">
+              <h3>{{ item.name || item.title }}</h3>
+              <p class="p-meta">Color: Default</p>
+              <p class="p-qty">Qty: {{ item.quantity }}</p>
+            </div>
+            <div class="product-price">${{ (item.price * item.quantity) }}</div>
+          </div>
+        </div>
+
+        <div class="discount-section">
+          <label class="discount-label">Discount Code</label>
+          <div class="discount-input-group">
+            <input type="text" [(ngModel)]="discountCode" [ngModelOptions]="{standalone: true}" placeholder="Enter code">
+            <button type="button" (click)="applyDiscount()">Apply</button>
+          </div>
+        </div>
+
+        <div class="price-breakdown">
+          <div class="price-line">
+            <span>Subtotal</span>
+            <span>${{ subtotal }}</span>
+          </div>
+          <div class="price-line">
+            <span>Shipping</span>
+            <span>${{ shipping }}</span>
+          </div>
+          <div class="price-line">
+            <span>Tax</span>
+            <span>${{ tax }}</span>
+          </div>
+          <hr class="price-divider">
+          <div class="price-line total-line">
+            <span>Total</span>
+            <span class="final-total">${{ total }}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-footer></app-footer>

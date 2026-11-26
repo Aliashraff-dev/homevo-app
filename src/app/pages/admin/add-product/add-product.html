@@ -1,0 +1,69 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main class="admin-main">
+  <div class="page-header">
+    <h1 class="page-title">Add New Product</h1>
+  </div>
+
+  <div class="form-panel">
+    <div *ngIf="sessionExpiredMessage" class="error-banner">{{ sessionExpiredMessage }}</div>
+    <div *ngIf="successMessage" class="success-banner">{{ successMessage }}</div>
+    <div *ngIf="errors.general" class="error-banner">{{ errors.general }}</div>
+
+    <form (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" [(ngModel)]="product.name" name="name" placeholder="e.g. Olive Crest Lounge Chair">
+          <p class="error-msg" *ngIf="errors.name">{{ errors.name }}</p>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <select [(ngModel)]="product.categoryId" name="categoryId">
+            <option [value]="0">Select a category</option>
+            <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+          </select>
+          <p class="error-msg" *ngIf="errors.categoryId">{{ errors.categoryId }}</p>
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label>Description</label>
+        <textarea [(ngModel)]="product.description" name="description" rows="4" placeholder="Product description..."></textarea>
+        <p class="error-msg" *ngIf="errors.description">{{ errors.description }}</p>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price ($)</label>
+          <input type="number" [(ngModel)]="product.price" name="price" placeholder="0">
+          <p class="error-msg" *ngIf="errors.price">{{ errors.price }}</p>
+        </div>
+
+        <div class="form-group">
+          <label>Stock Quantity</label>
+          <input type="number" [(ngModel)]="product.stockQuantity" name="stockQuantity" placeholder="0">
+          <p class="error-msg" *ngIf="errors.stockQuantity">{{ errors.stockQuantity }}</p>
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label>Image URL</label>
+        <input type="text" [(ngModel)]="product.imageUrl" name="imageUrl" placeholder="/product-image.png">
+        <p class="error-msg" *ngIf="errors.imageUrl">{{ errors.imageUrl }}</p>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="product.isFeatured" name="isFeatured">
+          Featured Product
+        </label>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="submitting">
+        {{ submitting ? 'Adding...' : 'Add Product' }}
+      </button>
+    </form>
+  </div>
+</main>

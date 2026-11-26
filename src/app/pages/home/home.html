@@ -1,0 +1,299 @@
+<app-header></app-header>
+
+<section class="hero-section">
+  <h1 class="hero-title">
+    Upgrade Your Space <br>
+    <span class="with-script">with</span> Modern Furniture
+  </h1>
+  <div class="hero-wrapper">
+    <div class="hero-left-card">
+      <img src="hero-side.png" alt="Interior view">
+      <p>Stylish, Comfortable & Affordable Furniture — Designed To Make Your Home Feel Truly Yours.</p>
+    </div>
+    <div class="hero-center-content">
+      <div class="hero-image-container">
+        <img [src]="currentChairImage" 
+     class="hero-main-chair"
+     [style.opacity]="chairOpacity"
+     alt="Modern Chair">
+      </div>
+      <div class="hero-buttons">
+        <button class="btn-filled" routerLink="/collection">Shop Now <span>↗</span></button>
+        <button class="btn-outline" routerLink="/collection">Explore Collection</button>
+      </div>
+    </div>
+    <div class="hero-right-swatches">
+      <div *ngFor="let swatch of swatches"
+        class="swatch"
+        [class.active]="currentSlide === swatch.index"
+        [style.background]="swatch.color"
+        (click)="changeSwatch(swatch)">
+      </div>
+    </div>
+  </div>
+  <div class="hero-slider-nav">
+    <span>{{ currentSlide }}</span><span class="gray">/05 ➔</span>
+  </div>
+</section>
+
+<div class="ticker-banner">
+  <div class="ticker-track">
+    <div class="ticker-item">
+      <span>Timeless Design</span> <i class="fa-solid fa-wand-magic-sparkles"></i>
+      <span>Pure Comfort</span> <i class="fa-regular fa-star"></i>
+      <span>Designed For Life</span> <i class="fa-solid fa-wand-magic-sparkles"></i>
+      <span>Best Price Quality</span> <i class="fa-regular fa-star"></i>
+      <span>Premium Materials</span> <i class="fa-solid fa-wand-magic-sparkles"></i>
+    </div>
+    <div class="ticker-item">
+      <span>Timeless Design</span> <i class="fa-solid fa-wand-magic-sparkles"></i>
+      <span>Pure Comfort</span> <i class="fa-regular fa-star"></i>
+      <span>Designed For Life</span> <i class="fa-solid fa-wand-magic-sparkles"></i>
+      <span>Best Price Quality</span> <i class="fa-regular fa-star"></i>
+      <span>Premium Materials</span> <i class="fa-solid fa-wand-magic-sparkles"></i>
+    </div>
+  </div>
+</div>
+
+<section class="categories-section">
+  <div class="categories-container">
+    <div class="categories-left">
+      <h2 class="categories-title">
+        SHOP BY
+        <span class="category-script">Category</span>
+      </h2>
+      <div class="categories-arrows">
+        <i class="fa-solid fa-arrow-left"></i>
+        <i class="fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="categories-grid">
+      <div *ngFor="let cat of categories; let i = index"
+        class="category-card"
+        [class.active]="activeCategory === i"
+        (click)="setCategory(i)">
+        <i [class]="cat.icon + ' category-icon'"></i>
+        <span class="category-name">{{ cat.name }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="large-banner-section"></section>
+
+<section class="explore-collection-section">
+  <div class="explore-container">
+    <div class="explore-header">
+      <h2 class="explore-title">EXPLORE OUR <span class="new-script">New</span><br>COLLECTION</h2>
+      <div class="explore-filters">
+        <span *ngFor="let filter of filters"
+          class="filter-item"
+          [class.active]="activeFilter === filter"
+          (click)="setFilter(filter)">
+          {{ filter }}
+        </span>
+      </div>
+    </div>
+    <div class="products-grid-showcase">
+      <div class="products-top-asymmetric">
+        <div *ngFor="let product of products.slice(0,3)" class="product-card" [class]="product.class">
+          <div class="product-image-wrap">
+            <img [src]="product.image" [alt]="product.name">
+            <button class="favorite-btn" (click)="toggleFavorite(product)">
+  <i [class]="isFavorite(product.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+     [style.color]="isFavorite(product.id) ? '#8D4328' : ''"></i>
+</button>
+          </div>
+          <div class="product-info">
+            <h4 class="product-name">{{ product.name }}</h4>
+            <p class="product-price">${{ product.price }}</p>
+            <button class="add-to-cart-btn" (click)="addToCart(product)"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="products-bottom-regular">
+        <div *ngFor="let product of products.slice(3,6)" class="product-card">
+          <div class="product-image-wrap">
+            <img [src]="product.image" [alt]="product.name">
+            <button class="favorite-btn" (click)="toggleFavorite(product)">
+  <i [class]="isFavorite(product.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+     [style.color]="isFavorite(product.id) ? '#8D4328' : ''"></i>
+</button>
+          </div>
+          <div class="product-info">
+            <h4 class="product-name">{{ product.name }}</h4>
+            <p class="product-price">${{ product.price }}</p>
+            <button class="add-to-cart-btn" (click)="addToCart(product)"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="showcase-wrapper">
+  <div class="showcase-inner-section">
+    <div class="living-showcase-header">
+      <h2 class="living-main-title">
+        MADE FOR YOUR<br>
+        EVERYDAY <span class="thin-script">Living</span>
+      </h2>
+    </div>
+    <div class="living-showcase-content">
+      <div class="accordion-container">
+        <div *ngFor="let item of accordions; let i = index"
+          class="accordion-item"
+          [class.active]="activeAccordion === i">
+          <div class="accordion-header" (click)="toggleAccordion(i)">
+            <div class="accordion-title-block">
+              <i class="fa-solid fa-sparkles sparkle-icon"></i>
+              <h3 class="accordion-title">{{ item.title }}</h3>
+            </div>
+            <i class="fa-solid fa-chevron-down accordion-arrow"></i>
+          </div>
+          <div class="accordion-content">{{ item.content }}</div>
+        </div>
+      </div>
+      <div class="image-side-container">
+        <img src="living-showcase.png" alt="Living Room Showcase">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="vero-container-wrapper">
+  <section class="vero-split-section">
+    <div class="vero-left">
+      <div class="vero-left-top">
+        <span>Featured Furniture</span>
+        <span>Stylish, Comfortable</span>
+      </div>
+      <h2 class="vero-title">
+        VERO LEATHER <br>
+        <span class="vero-script">Armchair</span>
+      </h2>
+      <img src="vero-chair-main.png" alt="Vero Leather Armchair" class="vero-main-img">
+    </div>
+    <div class="vero-right">
+      <div class="vero-right-top">
+        <span>Cognac Brown (Also Available In Midnight Black & Ivory Cream)</span>
+        <span>Living Room / Drawing Room</span>
+      </div>
+      <div class="vero-details-images">
+        <img src="vero-detail-1.jpg" alt="Vero Detail 1">
+        <img src="vero-detail-2.jpg" alt="Vero Detail 2">
+      </div>
+      <p class="vero-description">
+        The Vero Armchair Wraps You In Full-Grain Leather With A Solid Walnut Frame — A Statement Piece That's As Durable As It Is Beautiful.
+      </p>
+      <div class="vero-bottom-action">
+        <span class="vero-price">$329</span>
+        <button class="vero-add-cart" (click)="addToCart({name: 'Vero Leather Armchair', price: 329})">Add To Cart</button>
+      </div>
+      <img src="vero-room.jpg" alt="Vero Room" class="vero-room-img">
+    </div>
+  </section>
+</div>
+
+<div class="ticker-banner clients-ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">
+      <span>What Tells Our Clients</span> <span class="script-text">Us</span> <i class="fa-regular fa-star"></i>
+      <span>What Tells Our Clients</span> <span class="script-text">Us</span> <i class="fa-regular fa-star"></i>
+      <span>What Tells Our Clients</span> <span class="script-text">Us</span> <i class="fa-regular fa-star"></i>
+    </div>
+    <div class="ticker-item">
+      <span>What Tells Our Clients</span> <span class="script-text">Us</span> <i class="fa-regular fa-star"></i>
+      <span>What Tells Our Clients</span> <span class="script-text">Us</span> <i class="fa-regular fa-star"></i>
+      <span>What Tells Our Clients</span> <span class="script-text">Us</span> <i class="fa-regular fa-star"></i>
+    </div>
+  </div>
+</div>
+
+<section class="footer-image-section">
+  <img src="01_jpg_cd23fc51-3f6c-4afd-b36d-99c935a117d8.webp" alt="Footer Display" class="footer-bg">
+  <div class="testimonial-overlay">
+    <img src="testimonial-card.png" alt="Customer Testimonial">
+  </div>
+</section>
+
+<section class="about-section">
+  <div class="about-container">
+    <h2 class="about-title">
+      WE BELIEVE FURNITURE IS MORE<br>
+      THAN JUST DECOR — IT'S A PART<br>
+      OF <span class="lifestyle-script">Your Lifestyle.</span>
+    </h2>
+    <div class="about-images-row">
+      <img src="about-side-left.jpg" alt="About Side Left" class="about-side-img">
+      <div class="about-main-wrap">
+        <img src="about-main.jpg" alt="About Main">
+      </div>
+      <img src="about-side-right.jpg" alt="About Side Right" class="about-side-img">
+    </div>
+    <p class="about-description">
+      Stylish, Comfortable & Affordable Furniture — Designed To Make Your Home Feel Truly Yours.
+    </p>
+    <button class="about-shop-btn" routerLink="/collection">Shop Now ↗</button>
+  </div>
+</section>
+
+<!-- ==================== LIFESTYLE BANNER SECTION ==================== -->
+<section class="lifestyle-section">
+  <div class="lifestyle-gallery">
+    <div class="gallery-item">
+      <img src="/gallery-1.jpg" alt="Cozy Corner 1" onerror="this.src='/hero-chair.png'">
+    </div>
+    <div class="gallery-item">
+      <img src="/gallery-2.jpg" alt="Cozy Corner 2" onerror="this.src='/hero-chair.png'">
+    </div>
+    <div class="gallery-item">
+      <img src="/gallery-3.jpg" alt="Cozy Corner 3" onerror="this.src='/hero-chair.png'">
+    </div>
+    <div class="gallery-item">
+      <img src="/gallery-4.jpg" alt="Cozy Corner 4" onerror="this.src='/hero-chair.png'">
+    </div>
+  </div>
+
+  <div class="lifestyle-banner-card">
+    <h2 class="lifestyle-heading">
+      FROM COZY CORNERS TO STATEMENT PIECES<br>
+      FIND FURNITURE THAT FITS <span>Your Lifestyle.</span>
+    </h2>
+    <a routerLink="/collection" class="shop-now-btn">Shop Now ↗</a>
+  </div>
+</section>
+
+<!-- ==================== FAQ SECTION ==================== -->
+<section class="faq-section">
+  <div class="faq-header">
+    <h2>FREQUENTLY <br><span>Asked</span> QUESTIONS</h2>
+  </div>
+
+  <div class="faq-grid">
+    <div class="faq-image-container">
+      <img src="/faq-chair.png" alt="FAQ Chair" onerror="this.src='/hero-chair.png'">
+    </div>
+
+    <div class="faq-accordion-list">
+      <div 
+        class="faq-item" 
+        *ngFor="let item of accordions; let i = index"
+        [class.active]="activeAccordion === i"
+        (click)="toggleAccordion(i)"
+      >
+        <div class="faq-question">
+          <h3>{{ item.title }}</h3>
+          <span class="faq-icon">
+            <i class="fa-solid" [ngClass]="activeAccordion === i ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+          </span>
+        </div>
+        <div class="faq-answer" *ngIf="activeAccordion === i">
+          <p>{{ item.content }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

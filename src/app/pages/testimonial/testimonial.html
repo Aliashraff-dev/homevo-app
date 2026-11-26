@@ -1,0 +1,18 @@
+<app-header></app-header>
+
+<main>
+  <div class="testimonial-hero">
+    <h1>Voices of Home</h1>
+    <p>What our clients say about their experience with Homevo.</p>
+  </div>
+
+  <section class="testimonial-container">
+    <article *ngFor="let item of testimonials" class="testimonial-card">
+      <div class="star-rating">{{ item.stars }}</div>
+      <p class="quote-text">"{{ item.quote }}"</p>
+      <span class="client-name">— {{ item.name }}</span>
+    </article>
+  </section>
+</main>
+
+<app-footer></app-footer>
