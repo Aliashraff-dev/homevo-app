@@ -39,7 +39,33 @@ export class AdminOrdersComponent implements OnInit {
     });
   }
 
-  private getSavedStatuses(): Record<string, string> {
+  private normalizeStatus(rawStatus: any): string {
+    const numericMap: Record<number, string> = {
+      0: "Pending",
+      1: "Processing",
+      2: "Shipped",
+      3: "Delivered",
+      4: "Cancelled"
+    };
+
+    if (typeof rawStatus === "number" && Number.isInteger(rawStatus)) {
+      return numericMap[rawStatus] || "Pending";
+    }
+
+    const trimmed = String(rawStatus ?? "").trim();
+    if (!trimmed) return "";
+
+    if (/^[0-4]$/.test(trimmed)) {
+      return numericMap[Number(trimmed)] || "Pending";
+    }
+
+    const matchedOption = this.statusOptions.find(
+      (opt) => opt.toLowerCase() === trimmed.toLowerCase()
+    );
+    return matchedOption || trimmed;
+  }
+
+    private getSavedStatuses(): Record<string, string> {
     try {
       const raw = localStorage.getItem(this.localStatusKey);
       return raw ? JSON.parse(raw) : {};
@@ -76,7 +102,9 @@ export class AdminOrdersComponent implements OnInit {
 
           const resolvedName = order.customerName || order.user?.userName || order.user?.fullName || 'Unknown Customer';
           const resolvedEmail = order.customerEmail || order.user?.email || '';
-          const resolvedStatus = order.status || savedStatuses[orderKey] || 'Pending';
+          const apiStatus = this.normalizeStatus(order.status ?? order.Status);
+          const localStatus = this.normalizeStatus(savedStatuses[orderKey]);
+          const resolvedStatus = apiStatus || localStatus || "Pending";
 
           return {
             ...order,
