@@ -24,7 +24,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private cdr: ChangeDetectorRef, 
     private favoritesService: FavoritesService,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router
   ) {}
 
   swatches = [
@@ -45,12 +46,12 @@ export class HomeComponent implements OnInit {
   filters = ['ALL', 'LIVING ROOM', 'DRAWING', 'OFFICE', 'OUTDOOR'];
 
   products = [
-    { id: 1, name: 'Olive Crest Lounge Chair', price: 420, image: '/product-1-olive.png', class: 'showcase-large' },
-    { id: 2, name: 'Ivory Haven Armchair', price: 360, image: '/product-2-ivory.png', class: 'showcase-med-top' },
-    { id: 3, name: 'Oak Nest Accent Chair', price: 310, image: '/product-3-oak.png', class: 'showcase-small-right' },
-    { id: 4, name: 'Cloud Ease Chair', price: 260, image: '/product-4-cloud.png', class: '' },
-    { id: 5, name: 'Amber Loop Chair', price: 330, image: '/product-5-amber.png', class: '' },
-    { id: 6, name: 'Sage Frame Armchair', price: 295, image: '/product-6-sage.png', class: '' },
+    { id: 1, name: 'Olive Crest Lounge Chair', price: 420, image: '/product-1-olive.png', category: 'LIVING ROOM', class: 'showcase-large' },
+    { id: 2, name: 'Ivory Haven Armchair', price: 360, image: '/product-2-ivory.png', category: 'LIVING ROOM', class: 'showcase-med-top' },
+    { id: 3, name: 'Oak Nest Accent Chair', price: 310, image: '/product-3-oak.png', category: 'DRAWING', class: 'showcase-small-right' },
+    { id: 4, name: 'Cloud Ease Chair', price: 260, image: '/product-4-cloud.png', category: 'BEDROOM', class: '' },
+    { id: 5, name: 'Amber Loop Chair', price: 330, image: '/product-5-amber.png', category: 'OFFICE', class: '' },
+    { id: 6, name: 'Sage Frame Armchair', price: 295, image: '/product-6-sage.png', category: 'OUTDOOR', class: '' },
   ];
 
   // تم تحديث الأسئلة والأجوبة لتطابق تصميم قسم الـ FAQ المطلوب
@@ -103,8 +104,23 @@ export class HomeComponent implements OnInit {
     }, 500);
   }
 
+  // Categories available in Collection page filter bar
+  collectionAvailableCategories = ['ALL', 'LIVING ROOM', 'BEDROOM', 'OFFICE', 'OUTDOOR'];
+
   setCategory(index: number) {
     this.activeCategory = index;
+    const catName = (this.categories[index]?.name || '').toUpperCase().trim();
+    if (catName) {
+      this.router.navigate(['/collection'], { queryParams: { category: catName } });
+    }
+  }
+
+  onShowcaseProductClick(product: any) {
+    const cat = (product?.category || '').toUpperCase().trim();
+    if (cat && this.collectionAvailableCategories.includes(cat)) {
+      this.router.navigate(['/collection'], { queryParams: { category: cat } });
+    }
+    // If category is not yet available on Collection page (e.g. DRAWING), do nothing until added there
   }
 
   setFilter(filter: string) {

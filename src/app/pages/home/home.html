@@ -97,7 +97,7 @@
     <div class="products-grid-showcase">
       <div class="products-top-asymmetric">
         <div *ngFor="let product of products.slice(0,3)" class="product-card" [class]="product.class">
-          <div class="product-image-wrap">
+          <div class="product-image-wrap" (click)="onShowcaseProductClick(product)" style="cursor: pointer;">
             <img [src]="product.image" [alt]="product.name">
             <button class="favorite-btn" (click)="toggleFavorite(product)">
   <i [class]="isFavorite(product.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
@@ -105,7 +105,7 @@
 </button>
           </div>
           <div class="product-info">
-            <h4 class="product-name">{{ product.name }}</h4>
+            <h4 class="product-name" (click)="onShowcaseProductClick(product)" style="cursor: pointer;">{{ product.name }}</h4>
             <p class="product-price">${{ product.price }}</p>
             <button class="add-to-cart-btn" (click)="addToCart(product)"><i class="fa-solid fa-plus"></i></button>
           </div>

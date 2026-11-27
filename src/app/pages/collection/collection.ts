@@ -19,6 +19,7 @@ import { environment } from '../../../environments/environment';
 export class CollectionComponent implements OnInit {
   activeFilter = 'ALL';
   searchQuery = '';
+  private pendingCategory: string | null = null;
 
   // قيم فلتر السعر الافتراضية المطلوبة
   minPrice: number = 100;
@@ -67,6 +68,10 @@ export class CollectionComponent implements OnInit {
       if (params['search']) {
         this.searchQuery = params['search'];
       }
+      if (params['category']) {
+        this.pendingCategory = params['category'].toString().trim().toUpperCase();
+        this.applyPendingCategory();
+      }
     });
   }
 
@@ -78,6 +83,7 @@ export class CollectionComponent implements OnInit {
             .map(c => (c.name || '').toString().trim().toUpperCase())
             .filter(name => name.length > 0);
           this.filters = ['ALL', ...Array.from(new Set(apiNames))];
+          this.applyPendingCategory();
           this.cdr.detectChanges();
         }
       },
@@ -132,6 +138,16 @@ export class CollectionComponent implements OnInit {
       this.favoritesService.removeFromFavorites(product.id);
     } else {
       this.favoritesService.addToFavorites(product);
+    }
+  }
+
+  private applyPendingCategory() {
+    if (!this.pendingCategory) return;
+    const match = this.filters.find(f => f.toUpperCase() === this.pendingCategory);
+    if (match) {
+      this.activeFilter = match;
+      this.pendingCategory = null;
+      this.cdr.detectChanges();
     }
   }
 
