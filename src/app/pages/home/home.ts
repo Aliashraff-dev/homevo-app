@@ -88,6 +88,11 @@ export class HomeComponent implements OnInit {
   private syncProductsFromApi() {
     this.http.get<any>(`${environment.apiBaseUrl}/Products?pageSize=200`).subscribe({
       next: (res) => {
+      const rawList = Array.isArray(res) ? res : (res?.items || res?.data || res?.products || []);
+      if (Array.isArray(rawList) && rawList.length > 0) {
+        this.cartService.syncWithProducts(rawList);
+        this.favoritesService.syncWithProducts(rawList);
+      }
         const list = Array.isArray(res) ? res : (res?.items || res?.data || []);
         if (!Array.isArray(list) || list.length === 0) return;
 

@@ -132,6 +132,8 @@ export class CollectionComponent implements OnInit {
 
         const presentIds = new Set(updatedLocal.map((p: any) => Number(p.id)));
         const presentNames = new Set(updatedLocal.map((p: any) => String(p.name || "").trim().toLowerCase()));
+        this.cartService.syncWithProducts(normalizedApiProducts);
+        this.favoritesService.syncWithProducts(normalizedApiProducts);
         const uniqueNew = normalizedApiProducts.filter(
           (ap: any) => !presentIds.has(Number(ap.id)) && !presentNames.has(String(ap.name || "").trim().toLowerCase())
         );
