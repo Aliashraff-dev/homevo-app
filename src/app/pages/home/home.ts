@@ -43,12 +43,12 @@ export class HomeComponent implements OnInit {
     { icon: 'fa-solid fa-chair', name: 'Office Furniture' },
   ];
 
-  filters = ['ALL', 'LIVING ROOM', 'DRAWING', 'OFFICE', 'OUTDOOR'];
+  filters = ['ALL', 'LIVING ROOM', 'BEDROOM', 'OFFICE', 'OUTDOOR'];
 
   products = [
     { id: 1, name: 'Olive Crest Lounge Chair', price: 420, image: '/product-1-olive.png', category: 'LIVING ROOM', class: 'showcase-large' },
     { id: 2, name: 'Ivory Haven Armchair', price: 360, image: '/product-2-ivory.png', category: 'LIVING ROOM', class: 'showcase-med-top' },
-    { id: 3, name: 'Oak Nest Accent Chair', price: 310, image: '/product-3-oak.png', category: 'DRAWING', class: 'showcase-small-right' },
+    { id: 3, name: 'Oak Nest Accent Chair', price: 310, image: '/product-3-oak.png', category: 'BEDROOM', class: 'showcase-small-right' },
     { id: 4, name: 'Cloud Ease Chair', price: 260, image: '/product-4-cloud.png', category: 'BEDROOM', class: '' },
     { id: 5, name: 'Amber Loop Chair', price: 330, image: '/product-5-amber.png', category: 'OFFICE', class: '' },
     { id: 6, name: 'Sage Frame Armchair', price: 295, image: '/product-6-sage.png', category: 'OUTDOOR', class: '' },
@@ -125,6 +125,12 @@ export class HomeComponent implements OnInit {
 
   setFilter(filter: string) {
     this.activeFilter = filter;
+    const cat = (filter || '').toUpperCase().trim();
+    if (cat === 'ALL') {
+      this.router.navigate(['/collection']);
+    } else if (cat) {
+      this.router.navigate(['/collection'], { queryParams: { category: cat } });
+    }
   }
 
   toggleAccordion(index: number) {
