@@ -1,10 +1,17 @@
 # HOMEVO App (`homevo-app`)
 
-Angular and TypeScript e-commerce storefront and role-protected Admin Panel connected to a REST API and Neon database.
+Modern furniture e-commerce storefront and role-protected Admin Panel built with **Angular** and **TypeScript**, backed by a **REST API** and **Neon** PostgreSQL database, with continuous deployment on **Vercel**.
+
+## Tech Stack & Architecture
+- **Frontend:** Angular & TypeScript with responsive mobile-first styling across storefront and checkout flows.
+- **Authentication & Security:** Route guards (`adminGuard`), HTTP token attachment (`auth.interceptor.ts`), and safe error handling.
+- **State & Persistence:** Cart and Favorites managed with `localStorage` and synchronized with product data from the backend API.
+- **Backend & Database:** RESTful API connected to **Neon** (cloud PostgreSQL); sensitive connection credentials stay in server/platform environment variables.
+- **Hosting & CI/CD:** Pushing to `main` on GitHub automatically triggers production builds on **Vercel**.
 
 ## Key Features
-- **Storefront:** Home, Collection, and Product detail views; Cart and Favorites backed by `localStorage` with automatic product sync from the API; Checkout flow with auth and product validation followed by Confirmation.
-- **Admin Panel:** Route protection via `adminGuard`, automatic token attachment via `auth.interceptor.ts`, and management for Dashboard, Products, Categories, and Orders.
+- **Storefront:** Home hero & promotional sections, Categories, Collection filtering, Product details, About, Favorites, Cart quantity controls, Checkout progress steps, and Order Confirmation.
+- **Admin Panel:** Protected routes for managing Dashboard overview, Products, Categories, and Customer Orders.
 
 ## Local Setup
 ```bash
@@ -15,4 +22,4 @@ npx ng build
 ```
 
 ## Deployment
-Pushing to `main` on GitHub triggers automatic deployment on Vercel with environment configuration pointing to the backend API and Neon database.
+Push commits to `main` on GitHub to trigger an automatic deployment on Vercel.
