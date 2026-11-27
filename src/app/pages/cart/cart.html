@@ -7,24 +7,24 @@
     <!-- تم إضافة الشرط لتغيير لون النص للأحمر لو isCartEmptyError بقت true -->
     <p *ngIf="cart.length === 0" [style.color]="isCartEmptyError ? 'red' : 'inherit'">Your cart is empty.</p>
     
-    <div *ngFor="let item of cart; let i = index" class="cart-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 15px; border-bottom: 1px solid #eee;">
+    <div *ngFor="let item of cart; let i = index" class="cart-item">
       
       <div>
         <h4 style="margin: 0 0 5px 0;">{{ item.name }}</h4>
         <small style="color: #666;">${{ item.price }} / piece</small>
       </div>
 
-      <div style="display: flex; align-items: center; gap: 20px;">
+      <div class="cart-item-actions">
         
-        <div style="display: flex; align-items: center; gap: 10px; background: #d02f2f; padding: 5px 10px; border-radius: 4px;">
+        <div class="qty-controls">
           <button (click)="decreaseQuantity(i)" style="padding: 2px 8px; cursor: pointer; border: none; background: none; font-weight: bold;">-</button>
-          <span style="font-weight: bold; min-width: 20px; text-align: center;">{{ item.quantity }}</span>
+          <span class="qty-value">{{ item.quantity }}</span>
           <button (click)="increaseQuantity(i)" style="padding: 2px 8px; cursor: pointer; border: none; background: none; font-weight: bold;">+</button>
         </div>
 
-        <span style="font-weight: bold; min-width: 60px; text-align: right;">${{ item.price * item.quantity }}</span>
+        <span class="item-subtotal">${{ item.price * item.quantity }}</span>
 
-        <button (click)="removeFromCart(i)" style="color: red; background: none; border: none; cursor: pointer; font-weight: 500;">Remove</button>
+        <button (click)="removeFromCart(i)" class="remove-item-btn">Remove</button>
       </div>
 
     </div>

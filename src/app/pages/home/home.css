@@ -562,3 +562,40 @@
 }
 
 }
+
+@media (max-width: 768px) {
+  .hero-section {
+    overflow-x: clip;
+  }
+  .hero-title {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.9rem;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+  .hero-title span.with-script {
+    font-size: 2.3rem;
+    margin-right: 6px;
+  }
+  .hero-center-content {
+    width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+  }
+  .hero-left-card {
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+    padding-bottom: 16px;
+  }
+  .hero-left-card img {
+    width: 100%;
+    height: auto;
+    max-height: 240px;
+    object-fit: contain;
+  }
+}

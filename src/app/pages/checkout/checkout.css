@@ -591,3 +591,28 @@
 @media (max-width: 768px) {
   .checkout-layout { flex-direction: column; }
 }
+
+@media (max-width: 768px) {
+  .progress-indicator {
+    width: 100%;
+    gap: 6px;
+    font-size: 0.75rem;
+    justify-content: space-between;
+    overflow-x: hidden;
+  }
+  .progress-indicator .step {
+    gap: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .progress-indicator .step span {
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+  }
+  .progress-indicator .line {
+    flex: 1 1 auto;
+    min-width: 12px;
+    height: 1px;
+  }
+}
