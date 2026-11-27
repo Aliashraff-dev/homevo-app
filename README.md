@@ -1,19 +1,18 @@
-# Homevo App
+# HOMEVO App (`homevo-app`)
 
-Modern **Angular** and **TypeScript** storefront and admin web application for the **Homevo** e-commerce platform.
+Angular and TypeScript e-commerce storefront and role-protected Admin Panel connected to a REST API and Neon database.
 
 ## Key Features
-- Responsive storefront experience across desktop, tablet, and mobile viewports
-- Product catalog, collection browsing, product details, cart, favorites, and checkout flow
-- Route-guarded admin panel (`admin.guard.ts`) for managing dashboard metrics, products, categories, and customer orders
-- Environment-driven API configuration (`environment.ts` and `environment.prod.ts`) with HTTP interceptors
+- **Storefront:** Home, Collection, and Product detail views; Cart and Favorites backed by `localStorage` with automatic product sync from the API; Checkout flow with auth and product validation followed by Confirmation.
+- **Admin Panel:** Route protection via `adminGuard`, automatic token attachment via `auth.interceptor.ts`, and management for Dashboard, Products, Categories, and Orders.
 
-## Tech Stack
-- **Framework:** Angular & TypeScript
-- **Styling:** Responsive CSS & component-based architecture
+## Local Setup
+```bash
+npm install
+npx tsc --noEmit
+npx ng serve
+npx ng build
+```
 
-## Configuration & Running Locally
-Update `src/environments/environment.ts` (and `src/environments/environment.prod.ts` for production) with your backend `apiBaseUrl`, then install dependencies and start the dev server:
-
-    npm install
-    npm start
+## Deployment
+Pushing to `main` on GitHub triggers automatic deployment on Vercel with environment configuration pointing to the backend API and Neon database.
