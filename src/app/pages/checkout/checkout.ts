@@ -106,29 +106,51 @@ export class CheckoutComponent implements OnInit {
 
     this.http.get<any[]>(`${this.productsUrl}?pageSize=200`).subscribe({
       next: (dbProducts) => {
-        const validIds = new Set(
-          (dbProducts || [])
-            .map((p: any) => Number(p.id ?? p.Id))
-            .filter((id: number) => Number.isInteger(id) && id > 0)
-        );
+        const list = Array.isArray(dbProducts) ? dbProducts : ((dbProducts as any)?.items || []);
+        const byId = new Map<number, any>();
+        const byName = new Map<string, any>();
 
-        const invalidItem = this.cart.find((item) => {
-          const itemId = Number(item.id);
-          const qty = Number(item.quantity);
-          return !validIds.has(itemId) || !Number.isInteger(qty) || qty <= 0;
+        for (const prod of list) {
+          const pid = Number(prod?.id ?? prod?.Id);
+          if (Number.isInteger(pid) && pid > 0) {
+            byId.set(pid, prod);
+          }
+          const pname = String(prod?.name ?? prod?.Name ?? "").trim().toLowerCase();
+          if (pname && !byName.has(pname)) {
+            byName.set(pname, prod);
+          }
+        }
+
+        const resolvedItems = this.cart.map((item) => {
+          const rawId = Number(item?.id);
+          const itemName = String(item?.name ?? "").trim().toLowerCase();
+          const matched = (Number.isInteger(rawId) && byId.has(rawId))
+            ? byId.get(rawId)
+            : (itemName ? byName.get(itemName) : null);
+
+          const resolvedProductId = matched ? Number(matched.id ?? matched.Id) : NaN;
+          const qty = Number(item?.quantity);
+          return {
+            item,
+            resolvedProductId,
+            qty,
+            isValid: Number.isInteger(resolvedProductId) && resolvedProductId > 0 && Number.isInteger(qty) && qty > 0
+          };
         });
 
-        if (invalidItem) {
+        const invalidEntry = resolvedItems.find((entry) => !entry.isValid);
+
+        if (invalidEntry) {
           this.isSubmitting = false;
-          this.errorMessage = `Some items in your cart are unavailable or invalid (${invalidItem.name || 'Item'}). Please review your cart.`;
+          this.errorMessage = `Some items in your cart are unavailable or invalid (${invalidEntry.item?.name || 'Item'}). Please review your cart.`;
           this.cdr.detectChanges();
           return;
         }
 
         const orderPayload = {
-          items: this.cart.map((item) => ({
-            productId: Number(item.id),
-            quantity: Number(item.quantity)
+          items: resolvedItems.map((entry) => ({
+            productId: entry.resolvedProductId,
+            quantity: entry.qty
           }))
         };
 
