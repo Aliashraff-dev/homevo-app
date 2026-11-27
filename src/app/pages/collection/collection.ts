@@ -100,17 +100,42 @@ export class CollectionComponent implements OnInit {
         const list = Array.isArray(apiProducts) ? apiProducts : ((apiProducts as any)?.items || (apiProducts as any)?.data || []);
         if (!Array.isArray(list) || list.length === 0) return;
 
-        const existingIds = new Set(this.products.map(p => p.id));
         const normalizedApiProducts = list.map((item: any) => ({
-          id: item.id,
-          name: item.name || "",
-          price: Number(item.price) || 0,
-          image: item.imageUrl || item.image || "/chair-1.jpg",
+          id: Number(item.id ?? item.Id),
+          name: item.name ?? item.Name ?? "",
+          price: Number(item.price ?? item.Price) || 0,
+          image: item.imageUrl ?? item.image ?? "/chair-1.jpg",
           category: ((item.categoryName || item.category?.name || item.category || "LIVING ROOM") + "").trim().toUpperCase()
         }));
 
-        const uniqueNew = normalizedApiProducts.filter(p => !existingIds.has(p.id));
-        this.products = [...this.products, ...uniqueNew];
+        const apiByName = new Map<string, any>();
+        const apiById = new Map<number, any>();
+        for (const ap of normalizedApiProducts) {
+          if (Number.isInteger(ap.id) && ap.id > 0) apiById.set(ap.id, ap);
+          const key = String(ap.name || "").trim().toLowerCase();
+          if (key && !apiByName.has(key)) apiByName.set(key, ap);
+        }
+
+        const updatedLocal = this.products.map((localProd) => {
+          const matchedByName = apiByName.get(String(localProd.name || "").trim().toLowerCase());
+          const matched = matchedByName || (apiById.has(Number(localProd.id)) ? apiById.get(Number(localProd.id)) : null);
+          if (!matched) return localProd;
+          return {
+            ...localProd,
+            id: matched.id,
+            name: matched.name || localProd.name,
+            price: matched.price || localProd.price,
+            image: matched.image || localProd.image,
+            category: matched.category || localProd.category
+          };
+        });
+
+        const presentIds = new Set(updatedLocal.map((p: any) => Number(p.id)));
+        const presentNames = new Set(updatedLocal.map((p: any) => String(p.name || "").trim().toLowerCase()));
+        const uniqueNew = normalizedApiProducts.filter(
+          (ap: any) => !presentIds.has(Number(ap.id)) && !presentNames.has(String(ap.name || "").trim().toLowerCase())
+        );
+        this.products = [...updatedLocal, ...uniqueNew];
         this.cdr.detectChanges();
       },
       error: (err) => {

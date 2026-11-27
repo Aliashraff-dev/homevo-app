@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from '../../components/header/header';
@@ -40,7 +42,7 @@ export class ProductComponent implements OnInit {
     { id: 18, name: 'Classic Studio Chair', price: 340, image: 'chair-6.jpg', description: 'Versatile studio chair crafted with durable frame and soft studio upholstery.' }
   ];
 
-  constructor(private route: ActivatedRoute, private cartService: CartService) {}
+  constructor(private route: ActivatedRoute, private cartService: CartService, private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     const paramMap = this.route.snapshot.queryParamMap;
@@ -62,6 +64,37 @@ export class ProductComponent implements OnInit {
     } else {
       this.product = this.allProducts[0];
     }
+
+    this.syncProductFromApi(id, paramMap.get('name'));
+  }
+
+  private syncProductFromApi(requestedId: number, requestedName: string | null) {
+    this.http.get<any>(`${environment.apiBaseUrl}/Products?pageSize=200`).subscribe({
+      next: (res) => {
+        const list = Array.isArray(res) ? res : (res?.items || res?.data || []);
+        if (!Array.isArray(list) || list.length === 0) return;
+
+        const targetName = String(requestedName || this.product?.name || "").trim().toLowerCase();
+        const matched =
+          list.find((item: any) => Number(item?.id ?? item?.Id) === requestedId && requestedId > 0) ||
+          list.find((item: any) => String(item?.name ?? item?.Name ?? "").trim().toLowerCase() === targetName && targetName.length > 0);
+
+        if (matched) {
+          this.product = {
+            ...this.product,
+            id: Number(matched.id ?? matched.Id) || this.product?.id,
+            name: matched.name ?? matched.Name ?? this.product?.name,
+            price: Number(matched.price ?? matched.Price) ?? this.product?.price,
+            image: matched.imageUrl ?? matched.image ?? this.product?.image,
+            description: matched.description ?? matched.Description ?? this.product?.description
+          };
+          this.cdr.detectChanges();
+        }
+      },
+      error: (err) => {
+        console.error("Failed to sync product details from API:", err);
+      }
+    });
   }
 
   addToCart() {

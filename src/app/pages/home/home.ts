@@ -1,4 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { HeaderComponent } from '../../components/header/header';
@@ -25,7 +27,8 @@ export class HomeComponent implements OnInit {
     private cdr: ChangeDetectorRef, 
     private favoritesService: FavoritesService,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   swatches = [
@@ -78,7 +81,40 @@ export class HomeComponent implements OnInit {
     }
   ];
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.syncProductsFromApi();
+  }
+
+  private syncProductsFromApi() {
+    this.http.get<any>(`${environment.apiBaseUrl}/Products?pageSize=200`).subscribe({
+      next: (res) => {
+        const list = Array.isArray(res) ? res : (res?.items || res?.data || []);
+        if (!Array.isArray(list) || list.length === 0) return;
+
+        const byName = new Map<string, any>();
+        for (const item of list) {
+          const n = String(item?.name ?? item?.Name ?? "").trim().toLowerCase();
+          if (n && !byName.has(n)) byName.set(n, item);
+        }
+
+        this.products = this.products.map((localProd) => {
+          const matched = byName.get(String(localProd.name || "").trim().toLowerCase());
+          if (!matched) return localProd;
+          return {
+            ...localProd,
+            id: Number(matched.id ?? matched.Id) || localProd.id,
+            name: matched.name ?? matched.Name ?? localProd.name,
+            price: Number(matched.price ?? matched.Price) || localProd.price,
+            image: matched.imageUrl ?? matched.image ?? localProd.image
+          };
+        });
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error("Failed to sync home products from API:", err);
+      }
+    });
+  }
 
   isFavorite(productId: number): boolean {
     return this.favoritesService.isFavorite(productId);
