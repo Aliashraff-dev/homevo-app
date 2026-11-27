@@ -73,8 +73,11 @@ export class LoginComponent {
 
   private decodeToken(token: string): any {
     try {
-      const payload = token.split('.')[1];
-      return JSON.parse(atob(payload));
+      const base64Url = token.split('.')[1];
+      if (!base64Url) return null;
+      const base64 = base64Url.replace(/-/g, '+' ).replace(/_/g, '/');
+      const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=');
+      return JSON.parse(atob(padded));
     } catch {
       return null;
     }
@@ -89,7 +92,8 @@ export class LoginComponent {
       const decoded = this.decodeToken(response.token);
       const role = decoded ? decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
 
-      if (role === 'Admin') {
+      const isAdmin = Array.isArray(role) ? role.includes('Admin') : role === 'Admin';
+      if (isAdmin) {
         this.router.navigate(['/admin/dashboard']);
       } else {
         this.router.navigate(['/']);
