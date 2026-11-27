@@ -63,8 +63,8 @@
         <span class="category-script">Category</span>
       </h2>
       <div class="categories-arrows">
-        <i class="fa-solid fa-arrow-left"></i>
-        <i class="fa-solid fa-arrow-right"></i>
+        <i class="fa-solid fa-arrow-left" style="cursor: pointer;" (click)="prevCategory()" title="Previous Category"></i>
+        <i class="fa-solid fa-arrow-right" style="cursor: pointer;" (click)="nextCategory()" title="Next Category"></i>
       </div>
     </div>
     <div class="categories-grid">
@@ -101,7 +101,7 @@
         <div *ngFor="let product of products.slice(0,3)" class="product-card" [class]="product.class">
           <div class="product-image-wrap" (click)="onShowcaseProductClick(product)" style="cursor: pointer;">
             <img [src]="product.image" [alt]="product.name">
-            <button class="favorite-btn" (click)="toggleFavorite(product)">
+            <button class="favorite-btn" (click)="$event.stopPropagation(); toggleFavorite(product)">
   <i [class]="isFavorite(product.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
      [style.color]="isFavorite(product.id) ? '#8D4328' : ''"></i>
 </button>
@@ -109,7 +109,7 @@
           <div class="product-info">
             <h4 class="product-name" (click)="onShowcaseProductClick(product)" style="cursor: pointer;">{{ product.name }}</h4>
             <p class="product-price">${{ product.price }}</p>
-            <button class="add-to-cart-btn" (click)="addToCart(product)"><i class="fa-solid fa-plus"></i></button>
+            <button class="add-to-cart-btn" (click)="$event.stopPropagation(); addToCart(product)"><i class="fa-solid fa-plus"></i></button>
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@
         <div *ngFor="let product of products.slice(3,6)" class="product-card">
           <div class="product-image-wrap">
             <img [src]="product.image" [alt]="product.name">
-            <button class="favorite-btn" (click)="toggleFavorite(product)">
+            <button class="favorite-btn" (click)="$event.stopPropagation(); toggleFavorite(product)">
   <i [class]="isFavorite(product.id) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
      [style.color]="isFavorite(product.id) ? '#8D4328' : ''"></i>
 </button>
@@ -125,7 +125,7 @@
           <div class="product-info">
             <h4 class="product-name">{{ product.name }}</h4>
             <p class="product-price">${{ product.price }}</p>
-            <button class="add-to-cart-btn" (click)="addToCart(product)"><i class="fa-solid fa-plus"></i></button>
+            <button class="add-to-cart-btn" (click)="$event.stopPropagation(); addToCart(product)"><i class="fa-solid fa-plus"></i></button>
           </div>
         </div>
       </div>

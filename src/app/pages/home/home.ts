@@ -112,16 +112,33 @@ export class HomeComponent implements OnInit {
     const cat = this.categories[index];
     const filterValue = (cat?.filter || cat?.name || '').toUpperCase().trim();
     if (filterValue) {
-      this.router.navigate(['/collection'], { queryParams: { category: filterValue } });
+      this.router.navigate(['/collection'], { queryParams: { category: filterValue } }).then(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+      });
     }
+  }
+
+  prevCategory() {
+    const total = this.categories.length;
+    if (!total) return;
+    this.activeCategory = (this.activeCategory - 1 + total) % total;
+    this.cdr.detectChanges();
+  }
+
+  nextCategory() {
+    const total = this.categories.length;
+    if (!total) return;
+    this.activeCategory = (this.activeCategory + 1) % total;
+    this.cdr.detectChanges();
   }
 
   onShowcaseProductClick(product: any) {
     const cat = (product?.category || '').toUpperCase().trim();
     if (cat && this.collectionAvailableCategories.includes(cat)) {
-      this.router.navigate(['/collection'], { queryParams: { category: cat } });
+      this.router.navigate(['/collection'], { queryParams: { category: cat } }).then(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+      });
     }
-    // If category is not yet available on Collection page (e.g. DRAWING), do nothing until added there
   }
 
   setFilter(filter: string) {
