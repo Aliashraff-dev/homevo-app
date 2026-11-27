@@ -517,3 +517,30 @@
   background-color: #fbfbfa; /* خلفية ناعمة تليق بـ HOMEVO */
   padding: 10px; /* مسافة أمان داخلية للصورة */
 }
+
+@media (max-width: 576px) {
+  .product-card img {
+    height: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-strip {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 14px;
+    padding: 10px 16px;
+    scrollbar-width: none;
+  }
+  .filter-strip::-webkit-scrollbar {
+    display: none;
+  }
+  .filter-strip > span {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+}

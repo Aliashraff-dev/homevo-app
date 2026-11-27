@@ -159,3 +159,35 @@
 .add-cart-btn:hover {
   background: #4A2E1B;
 }
+
+@media (max-width: 992px) {
+  .favorites-container {
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  .favorites-title {
+    font-size: 2.2rem;
+    margin-bottom: 28px;
+  }
+  .favorites-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .fav-img-wrap img {
+    height: 200px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .favorites-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .fav-img-wrap img {
+    height: 220px;
+  }
+  .fav-actions {
+    flex-wrap: wrap;
+  }
+}

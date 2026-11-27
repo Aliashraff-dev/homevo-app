@@ -483,4 +483,82 @@
   }
 
 }
+
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 12px 16px 24px 16px;
+  }
+  .hero-title {
+    font-size: 2.15rem;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+  .hero-title span.with-script {
+    font-size: 2.55rem;
+    margin-right: 8px;
+  }
+  .hero-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 0;
+  }
+  .hero-left-card {
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+    padding-bottom: 0;
+    order: 2;
+  }
+  .hero-left-card img {
+    height: 150px;
+    margin-bottom: 10px;
+  }
+  .hero-center-content {
+    width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+    order: 1;
+  }
+  .hero-image-container {
+    height: 250px;
+  }
+  .hero-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .btn-filled,
+  .btn-outline {
+    padding: 10px 18px;
+    font-size: 0.88rem;
+  }
+  .hero-right-swatches {
+    flex-direction: row;
+    gap: 14px;
+    justify-content: center;
+    order: 3;
+    margin-top: 4px;
+  }
+  .hero-slider-nav {
+    position: static;
+    margin-top: 14px;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+  .ticker-banner {
+    margin-top: 18px;
+    padding: 10px 0;
+  }
+  .ticker-track,
+  .ticker-item {
+    gap: 18px;
+  }
+  .ticker-item {
+    font-size: 1.15rem;
+  }
+}
+
 }

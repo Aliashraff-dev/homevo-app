@@ -106,7 +106,7 @@ export class LoginComponent {
 
     if (this.isLoginMode) {
       if (!this.authData.email.trim() || !this.authData.password.trim()) {
-        this.errorMessage = 'Please enter both email and password.';
+        this.errorMessage = this.formatErrorText('Please enter both email and password.');
         this.cdr.detectChanges();
         return;
       }
@@ -120,7 +120,7 @@ export class LoginComponent {
         },
         error: (err) => {
           console.error('Login error details:', err);
-          this.errorMessage = err.error || 'Invalid email or password.';
+          this.errorMessage = this.formatErrorText(err.error || 'Invalid email or password.');
           this.cdr.detectChanges(); // تحديث فوري للشاشة عند الخطأ
         }
       });
@@ -148,14 +148,14 @@ export class LoginComponent {
             console.error('Register error details:', err);
             if (err.error) {
               if (typeof err.error === 'string') {
-                this.errorMessage = err.error;
+                this.errorMessage = this.formatErrorText(err.error);
               } else if (Array.isArray(err.error)) {
-                this.errorMessage = err.error.join(' | ');
+                this.errorMessage = this.formatErrorText(err.error.join(' | '));
               } else {
-                this.errorMessage = JSON.stringify(err.error);
+                this.errorMessage = this.formatErrorText(JSON.stringify(err.error));
               }
             } else {
-              this.errorMessage = 'Bad Request (400): Check password complexity or email format.';
+              this.errorMessage = this.formatErrorText('Bad Request (400): Check password complexity or email format.');
             }
             this.cdr.detectChanges(); // تحديث فوري للشاشة عند الخطأ
           }
@@ -163,4 +163,27 @@ export class LoginComponent {
       }
     }
   }
+
+  private formatErrorText(err: any): string {
+    const raw = err?.error?.message ?? err?.error ?? err?.message ?? "";
+    if (typeof raw === "string") {
+      const trimmed = raw.trim();
+      if (!trimmed || trimmed === "{}" || trimmed === "[]") {
+        return "Something went wrong. Please check your details and try again.";
+      }
+      return trimmed;
+    }
+    if (typeof raw === "object" && raw !== null) {
+      if (typeof raw.title === "string" && raw.title.trim()) return raw.title.trim();
+      const keys = Object.keys(raw);
+      if (keys.length === 0) {
+        return "Something went wrong. Please check your details and try again.";
+      }
+      const firstVal = raw[keys[0]];
+      if (Array.isArray(firstVal) && firstVal.length) return String(firstVal[0]);
+      if (typeof firstVal === "string" && firstVal.trim()) return firstVal.trim();
+    }
+    return "Something went wrong. Please check your details and try again.";
+  }
+
 }
