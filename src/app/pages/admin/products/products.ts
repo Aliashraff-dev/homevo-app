@@ -46,6 +46,14 @@ export class AdminProductsComponent implements OnInit {
     return false;
   }
 
+  private extractList(response: any, keys: string[] = []): any[] {
+      if (Array.isArray(response)) return response;
+      for (const k of ["data", "items", ...keys]) {
+        if (Array.isArray(response?.[k])) return response[k];
+      }
+      return [];
+    }
+
   loadProducts() {
     this.loading = true;
     this.errorMessage = '';
@@ -59,7 +67,7 @@ export class AdminProductsComponent implements OnInit {
 
     this.http.get<any[]>(url, { headers }).subscribe({
       next: (data) => {
-        this.products = data || [];
+        this.products = this.extractList(data, ["products"]);
         this.loading = false;
         this.cdr.detectChanges();
       },

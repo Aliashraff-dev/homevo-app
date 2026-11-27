@@ -33,13 +33,21 @@ export class AdminCategoriesComponent implements OnInit {
     });
   }
 
+  private extractList(response: any, keys: string[] = []): any[] {
+      if (Array.isArray(response)) return response;
+      for (const k of ["data", "items", ...keys]) {
+        if (Array.isArray(response?.[k])) return response[k];
+      }
+      return [];
+    }
+
   loadCategories() {
     this.loading = true;
     this.errorMessage = '';
     this.sessionExpiredMessage = '';
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
-        this.categories = data || [];
+        this.categories = this.extractList(data, ["categories"]);
         this.loading = false;
         this.cdr.detectChanges();
       },

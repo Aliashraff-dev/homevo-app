@@ -54,6 +54,14 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
+  private extractList(response: any, keys: string[] = []): any[] {
+      if (Array.isArray(response)) return response;
+      for (const k of ["data", "items", ...keys]) {
+        if (Array.isArray(response?.[k])) return response[k];
+      }
+      return [];
+    }
+
   loadDashboardData() {
     const headers = this.getAuthHeaders();
 
@@ -61,8 +69,9 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe({
         next: (data) => {
           if (data) {
-            this.summary = data;
-          }
+              const rawSummary = (data?.data && typeof data.data === "object" && !Array.isArray(data.data)) ? data.data : data;
+              this.summary = { ...this.summary, ...rawSummary };
+            }
           this.cdr.detectChanges();
         },
         error: (err) => console.error('Error loading summary:', err)
@@ -71,7 +80,7 @@ export class AdminDashboardComponent implements OnInit {
     this.http.get<any[]>(`${this.apiUrl}/Dashboard/recent-orders`, { headers })
       .subscribe({
         next: (data) => {
-          this.recentOrders = data || [];
+          this.recentOrders = this.extractList(data, ["recentOrders", "orders"]);
           this.loading = false;
           this.cdr.detectChanges();
         },
@@ -85,7 +94,7 @@ export class AdminDashboardComponent implements OnInit {
     this.http.get<any[]>(`${this.apiUrl}/Dashboard/low-stock`, { headers })
       .subscribe({
         next: (data) => {
-          this.lowStockProducts = data || [];
+          this.lowStockProducts = this.extractList(data, ["lowStockProducts", "products"]);
           this.cdr.detectChanges();
         },
         error: (err) => console.error('Error loading low stock:', err)
@@ -94,7 +103,7 @@ export class AdminDashboardComponent implements OnInit {
     this.http.get<any[]>(`${this.apiUrl}/Dashboard/order-status-chart`, { headers })
       .subscribe({
         next: (data) => {
-          this.orderStatusStats = data || [];
+          this.orderStatusStats = this.extractList(data, ["orderStatusStats", "stats"]);
           this.cdr.detectChanges();
         },
         error: (err) => console.error('Error loading chart:', err)

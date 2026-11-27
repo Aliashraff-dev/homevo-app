@@ -60,10 +60,18 @@ export class AdminAddProductComponent implements OnInit {
     return false;
   }
 
+  private extractList(response: any, keys: string[] = []): any[] {
+      if (Array.isArray(response)) return response;
+      for (const k of ["data", "items", ...keys]) {
+        if (Array.isArray(response?.[k])) return response[k];
+      }
+      return [];
+    }
+
   loadCategories() {
     this.http.get<any[]>(`${this.apiUrl}/Categories`).subscribe({
       next: (data) => {
-        this.categories = Array.isArray(data) ? data : [];
+        this.categories = this.extractList(data, ["categories"]);
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error loading categories:', err)
