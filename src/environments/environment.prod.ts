@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'http://localhost:5237/api'
+  apiBaseUrl: 'https://homevo-api.runasp.net/api'
 };
