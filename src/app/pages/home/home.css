@@ -599,3 +599,15 @@
     object-fit: contain;
   }
 }
+
+@media (max-width: 768px) {
+  .large-banner-section {
+    height: auto;
+    min-height: 260px;
+    aspect-ratio: 16 / 10;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #d8b594;
+  }
+}
