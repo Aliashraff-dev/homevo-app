@@ -14,6 +14,7 @@ export const routes: Routes = [
   { path: 'confirmation', loadComponent: () => import('./pages/confirmation/confirmation').then(m => m.ConfirmationComponent) },
   
   // Admin Routes
+  { path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
   { path: 'admin/dashboard', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/dashboard/dashboard').then(m => m.AdminDashboardComponent) },
   { path: 'admin/products', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/products/products').then(m => m.AdminProductsComponent) },
   { path: 'admin/edit-product/:id', canActivate: [adminGuard], loadComponent: () => import('./pages/admin/edit-product/edit-product').then(m => m.AdminEditProductComponent) },
