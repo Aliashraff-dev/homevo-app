@@ -37,10 +37,10 @@ export class HomeComponent implements OnInit {
   ];
 
   categories = [
-    { icon: 'fa-solid fa-couch', name: 'Living Room' },
-    { icon: 'fa-solid fa-bed', name: 'Bedroom' },
-    { icon: 'fa-solid fa-table', name: 'Dining Sets' },
-    { icon: 'fa-solid fa-chair', name: 'Office Furniture' },
+    { icon: 'fa-solid fa-couch', name: 'Living Room', filter: 'LIVING ROOM' },
+    { icon: 'fa-solid fa-bed', name: 'Bedroom', filter: 'BEDROOM' },
+    { icon: 'fa-solid fa-chair', name: 'Office', filter: 'OFFICE' },
+    { icon: 'fa-solid fa-tree', name: 'Outdoor', filter: 'OUTDOOR' },
   ];
 
   filters = ['ALL', 'LIVING ROOM', 'BEDROOM', 'OFFICE', 'OUTDOOR'];
@@ -109,9 +109,10 @@ export class HomeComponent implements OnInit {
 
   setCategory(index: number) {
     this.activeCategory = index;
-    const catName = (this.categories[index]?.name || '').toUpperCase().trim();
-    if (catName) {
-      this.router.navigate(['/collection'], { queryParams: { category: catName } });
+    const cat = this.categories[index];
+    const filterValue = (cat?.filter || cat?.name || '').toUpperCase().trim();
+    if (filterValue) {
+      this.router.navigate(['/collection'], { queryParams: { category: filterValue } });
     }
   }
 

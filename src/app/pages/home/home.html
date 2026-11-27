@@ -70,6 +70,7 @@
     <div class="categories-grid">
       <div *ngFor="let cat of categories; let i = index"
         class="category-card"
+        style="cursor: pointer;"
         [class.active]="activeCategory === i"
         (click)="setCategory(i)">
         <i [class]="cat.icon + ' category-icon'"></i>
